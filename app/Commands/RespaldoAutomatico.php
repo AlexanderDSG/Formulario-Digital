@@ -20,7 +20,7 @@ class RespaldoAutomatico extends BaseCommand
      * Configuración de respaldos (debe coincidir con RespaldoController)
      */
     private $config = [
-        'ruta_base' => 'C:\Users\Alex\Documents\Respaldos_BD',
+        'ruta_base' => 'C:\Respaldos_BD',
         'mysqldump_path' => 'C:\Program Files\MySQL\MySQL Server 8.0\bin\mysqldump.exe',
         'dias_retencion_diario' => 7,
         'dias_retencion_semanal' => 30,

@@ -35,9 +35,9 @@ echo [OK] Ejecutando con privilegios de administrador
 echo.
 
 REM Crear carpeta de respaldos si no existe
-if not exist "C:\Users\Alex\Documents\Respaldos_BD" (
+if not exist "C:\Respaldos_BD" (
     echo Creando carpeta de respaldos...
-    mkdir "C:\Users\Alex\Documents\Respaldos_BD"
+    mkdir "C:\Respaldos_BD"
     echo [OK] Carpeta creada
 ) else (
     echo [OK] Carpeta de respaldos ya existe
@@ -114,7 +114,7 @@ echo   - Respaldo Diario: 2AM, 8AM, 2PM, 8PM (cada dia)
 echo   - Respaldo Semanal: Domingos 2AM
 echo   - Respaldo Mensual: Dia 1 del mes, 2AM
 echo.
-echo Ruta de respaldos: C:\Users\Alex\Documents\Respaldos_BD\
+echo Ruta de respaldos: C:\Respaldos_BD\
 echo.
 echo =========================================================
 echo   PROBAR RESPALDO AHORA?
@@ -130,7 +130,7 @@ if /i "%respuesta%"=="S" (
     cd /d "C:\xampp\htdocs\Formulario-Digital"
     php spark respaldo:automatico diario
     echo.
-    echo Verifique la carpeta: C:\Users\Alex\Documents\Respaldos_BD\
+    echo Verifique la carpeta: C:\Respaldos_BD\
     echo.
 )
 

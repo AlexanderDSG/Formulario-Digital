@@ -10,7 +10,7 @@ class GeneradorPDFController extends BaseController
      * Ruta base donde se guardarán los PDFs
      * Por defecto: C:\Users\Alex\Documents\PDF
      */
-    private $rutaBasePDF = 'C:\Users\Alex\Documents\PDF';
+    private $rutaBasePDF = 'C:\PDF-Formulario-008-005';
 
     public function __construct()
     {
