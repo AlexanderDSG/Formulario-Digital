@@ -35,7 +35,7 @@ class ParroquiaModel extends Model
 
             SELECT 
                 pu.parr_urb_codigo AS codigo,
-                CONCAT(pu.parr_urb_nombre) AS nombre
+                CONCAT(pu.parr_urb_nombre, ' (Urbana)') AS nombre
             FROM t_parroquia_urbana pu
             INNER JOIN t_parroquia p ON p.parr_codigo = pu.parr_codigo
             WHERE p.cant_codigo = ?

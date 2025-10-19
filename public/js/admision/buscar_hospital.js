@@ -23,21 +23,18 @@ document.getElementById('btn-buscar').addEventListener('click', async () => {
         return;
     }
 
-    // Mostrar indicador de carga
     const btnBuscar = document.getElementById('btn-buscar');
     const originalText = btnBuscar.innerHTML;
     btnBuscar.disabled = true;
     btnBuscar.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Buscando...';
 
     try {
-
         const response = await fetch(endpoint, {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: bodyData
         });
 
-        // Verificar si la respuesta es válida
         if (!response.ok) {
             throw new Error(`HTTP Error: ${response.status} ${response.statusText}`);
         }
@@ -45,7 +42,6 @@ document.getElementById('btn-buscar').addEventListener('click', async () => {
         const json = await response.json();
 
         if (json.success) {
-
             const d = json.datos;
 
             try {
@@ -54,19 +50,16 @@ document.getElementById('btn-buscar').addEventListener('click', async () => {
                 document.getElementById('buscar_apellido').value = '';
                 document.getElementById('input-historia-clinica').value = '';
 
-                // Verificar que los elementos existen antes de usarlos
                 const codHistoriaEl = document.getElementById('cod-historia');
                 if (codHistoriaEl) {
                     codHistoriaEl.value = d.nro_historia || '';
                 }
 
-                // Traer cédula
                 const establHistoriaEl = document.getElementById('estab_historia_clinica');
                 if (establHistoriaEl) {
                     establHistoriaEl.value = d.cedula || '';
                 }
 
-                // Marcar radio SI si hay historia
                 const radioSiEl = document.getElementById('adm_historia_clinica_estab_si');
                 const radioNoEl = document.getElementById('adm_historia_clinica_estab_no');
 
@@ -106,7 +99,6 @@ document.getElementById('btn-buscar').addEventListener('click', async () => {
 
                 const datos = dividirDatos(d.apellidos || d.pac_apellidos, d.nombres || d.pac_nombres);
 
-                // Llenar nombres y apellidos de forma segura
                 const elementos = [
                     { id: 'pac_apellido1', valor: datos.apellido1 },
                     { id: 'pac_apellido2', valor: datos.apellido2 },
@@ -116,9 +108,7 @@ document.getElementById('btn-buscar').addEventListener('click', async () => {
 
                 elementos.forEach(elem => {
                     const el = document.getElementById(elem.id);
-                    if (el) {
-                        el.value = elem.valor;
-                    }
+                    if (el) el.value = elem.valor;
                 });
 
                 // FILA 3 - Estado civil y género
@@ -164,7 +154,6 @@ document.getElementById('btn-buscar').addEventListener('click', async () => {
                 const generoTexto = generoHospitalMap[d.sexo?.trim().toUpperCase()] || '';
                 const generoValue = generoMap[generoTexto] || '';
 
-                // Llenar campos de forma segura
                 const camposSegundaFila = [
                     { id: 'pac_estado_civil', valor: estadoCivilValue },
                     { id: 'pac_sexo', valor: generoValue },
@@ -173,9 +162,7 @@ document.getElementById('btn-buscar').addEventListener('click', async () => {
 
                 camposSegundaFila.forEach(campo => {
                     const el = document.getElementById(campo.id);
-                    if (el) {
-                        el.value = campo.valor;
-                    }
+                    if (el) el.value = campo.valor;
                 });
 
                 // Fecha de nacimiento
@@ -183,26 +170,10 @@ document.getElementById('btn-buscar').addEventListener('click', async () => {
                 if (d.fecha_nac) {
                     fechaFormateada = d.fecha_nac.split(' ')[0];
                     const fechaNacEl = document.getElementById('pac_fecha_nacimiento');
-                    if (fechaNacEl) {
-                        fechaNacEl.value = fechaFormateada;
-                    }
+                    if (fechaNacEl) fechaNacEl.value = fechaFormateada;
                 }
 
-                // FILA 4 - Ubicación y otros datos
-                const camposTerceraFila = [
-                    { id: 'res_provincia', valor: d.id_provincia || '' },
-                    { id: 'res_canton', valor: d.id_canton || '' },
-                    { id: 'res_parroquia', valor: d.id_parroquia || '' }
-                ];
-
-                camposTerceraFila.forEach(campo => {
-                    const el = document.getElementById(campo.id);
-                    if (el) {
-                        el.value = campo.valor;
-                    }
-                });
-
-                // Nacionalidad
+                // ✅ FILA 4 - NACIONALIDAD Y LUGAR DE NACIMIENTO
                 const nacionalidadHospitalMap = {
                     'ECU': 'ECUATORIANA',
                     'PER': 'PERUANA',
@@ -211,6 +182,7 @@ document.getElementById('btn-buscar').addEventListener('click', async () => {
                     'OTR': 'OTRA',
                     'ESP': 'A ESPECIFICAR',
                 };
+                
                 const nacionalidadMap = {
                     'ECUATORIANA': '1',
                     'PERUANA': '2',
@@ -219,12 +191,44 @@ document.getElementById('btn-buscar').addEventListener('click', async () => {
                     'OTRA': '5',
                     'A ESPECIFICAR': '6',
                 };
+                
                 const nacionalidadTexto = nacionalidadHospitalMap[d.id_nacionalidad?.trim().toUpperCase()] || '';
                 const nacionalidadValue = nacionalidadMap[nacionalidadTexto] || '';
                 const nacionalidadEl = document.getElementById('pac_nacionalidad');
+                
                 if (nacionalidadEl) {
                     nacionalidadEl.value = nacionalidadValue;
+                    
+                    // Disparar evento change para mostrar campos correctos
+                    const event = new Event('change', { bubbles: true });
+                    nacionalidadEl.dispatchEvent(event);
+                    
+                    // Si es ecuatoriano, dejar los selects vacíos para que el usuario los llene
+                    // Si es extranjero, poner el campo de texto con información del hospital si existe
+                    setTimeout(() => {
+                        if (nacionalidadValue === '1') {
+                            // Ecuatoriano - limpiar selects para que usuario los llene manualmente
+                        } else {
+                            // Extranjero - poner cualquier dato de ubicación que venga
+                            const lugarNacEl = document.getElementById('pac_lugar_nacimiento');
+                            if (lugarNacEl && d.lugar_nacimiento) {
+                                lugarNacEl.value = d.lugar_nacimiento;
+                            }
+                        }
+                    }, 300);
                 }
+
+                // Residencia
+                const camposTerceraFila = [
+                    { id: 'res_provincia', valor: d.id_provincia || '' },
+                    { id: 'res_canton', valor: d.id_canton || '' },
+                    { id: 'res_parroquia', valor: d.id_parroquia || '' }
+                ];
+
+                camposTerceraFila.forEach(campo => {
+                    const el = document.getElementById(campo.id);
+                    if (el) el.value = campo.valor;
+                });
 
                 // Calcular edad
                 const edadInput = document.getElementById('pac_edad_valor');
@@ -249,11 +253,9 @@ document.getElementById('btn-buscar').addEventListener('click', async () => {
         console.error('Stack trace:', error.stack);
         mostrarAlerta('error', `Error al consultar la base de datos del hospital: ${error.message}`);
     } finally {
-        // Restaurar el botón a su estado original
         btnBuscar.disabled = false;
         btnBuscar.innerHTML = originalText;
     }
 });
 
-// ✅ El autocompletado se maneja desde buscar_paciente.js
-// Este script solo maneja la búsqueda del hospital
+// El autocompletado se maneja desde buscar_paciente.js

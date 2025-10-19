@@ -196,7 +196,27 @@ class AdmisionController extends BaseController
 
         $provincia = $provinciaModel->find($provCodigo);
         $canton = !empty($cantCodigo) ? $cantonModel->find($cantCodigo) : null;
-        $parroquia = !empty($parrCodigo) ? $parroquiaModel->find($parrCodigo) : null;
+
+        // Buscar parroquia en ambas tablas (rural y urbana)
+        $parroquia = null;
+        if (!empty($parrCodigo)) {
+            // Primero intentar buscar en parroquias rurales
+            $parroquia = $parroquiaModel->find($parrCodigo);
+
+            // Si no se encuentra, buscar en parroquias urbanas
+            if (!$parroquia) {
+                $db = \Config\Database::connect();
+                $query = $db->query("
+                SELECT 
+                    parr_urb_codigo as parr_codigo,
+                    parr_urb_nombre as parr_nombre
+                FROM t_parroquia_urbana
+                WHERE parr_urb_codigo = ?
+            ", [$parrCodigo]);
+
+                $parroquia = $query->getRowArray();
+            }
+        }
 
         $partes = ['ECUADOR'];
         if ($provincia) $partes[] = $provincia['prov_nombre'];
@@ -209,7 +229,7 @@ class AdmisionController extends BaseController
     private function actualizarPacienteYAtencion($pacienteId, $estabArchivo, $estabCodigo, $usuId)
     {
         $request = \Config\Services::request();
-      
+
         $pacienteModel = new PacienteModel();
 
         $apellido1 = $request->getPost('pac_apellido1');
