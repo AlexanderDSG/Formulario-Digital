@@ -23,23 +23,29 @@
 <?php if (session()->get('rol_id') == 2): ?>
     <script src="<?= base_url('public/js/admision/buscar_paciente.js') ?>"></script>
     <script src="<?= base_url('public/js/admision/buscar_hospital.js') ?>"></script>
+    <script src="<?= base_url('public/js/admision/ubicacion.js') ?>"></script>
 <?php endif; ?>
 <script src="<?= base_url('public/js/alerta-mensaje.js') ?>"></script>
 <script src="<?= base_url('public/js/limpiar_formulario.js') ?>"></script>
 <script src="<?= base_url('public/js/alertas.js') ?>"></script>
+<script src="<?= base_url('public/js/admision/calcularEdad.js') ?>"></script>
 
 <!-- Sistema de timeout de sesión para áreas específicas -->
 <script src="<?= base_url('public/js/session-timeout.js') ?>"></script>
 
 <!-- Scripts de enfermería -->
-<script src="<?= base_url('public/js/enfermeria/listaEnfermeria.js') ?>"></script>
-<script src="<?= base_url('public/js/enfermeria/precargarDatosEnfermeria.js') ?>"></script>
+<?php if (session()->get('rol_id') == 3): ?>
+    <script src="<?= base_url('public/js/enfermeria/listaEnfermeria.js') ?>"></script>
+    <script src="<?= base_url('public/js/enfermeria/precargarDatosEnfermeria.js') ?>"></script>
+<?php endif; ?>
 
 <!-- Scripts de médicos -->
-<script src="<?= base_url('public/js/medicos/listaMedicos.js') ?>"></script>
-<script src="<?= base_url('public/js/medicos/precargarDatosMedicos.js') ?>"></script>
+<?php if (session()->get('rol_id') == 4): ?>
+    <script src="<?= base_url('public/js/medicos/listaMedicos.js') ?>"></script>
+    <script src="<?= base_url('public/js/medicos/precargarDatosMedicos.js') ?>"></script>
+<?php endif; ?>
 
-<!-- Scripts de administrador (cargar solo si es rol administrador) -->
+<!-- Scripts de administrador -->
 <?php if (session()->get('rol_id') == 1): ?>
     <!-- Chart.js para gráficos -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
@@ -64,14 +70,11 @@
     </script>
 <?php endif; ?>
 
-<!-- Scripts de especialidades (cargar solo si es rol especialista) -->
+<!-- Scripts de especialidades -->
 <?php if (session()->get('rol_id') == 5): ?>
-    <!-- Dashboard de reportes de especialidades -->
     <script src="<?= base_url('public/js/especialidades/dashboard-reportes.js') ?>"></script>
 <?php endif; ?>
 
-<!-- Scripts de admisión -->
-<script src="<?= base_url('public/js/admision/calcularEdad.js') ?>"></script>
 </body>
 
 </html>
