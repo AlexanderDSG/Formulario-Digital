@@ -1,0 +1,194 @@
+CRITICAL - 2025-10-03 10:19:11 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "[object HTMLButtonElement]"
+[Method: GET, Route: medicos/tomarAtencionRapida/%5Bobject%20HTMLButtonElement%5D]
+in SYSTEMPATH\Router\Router.php on line 741.
+ 1 SYSTEMPATH\Router\Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars('medicos/tomarAtencionRapida/[object HTMLButtonElement]')
+ 2 SYSTEMPATH\CodeIgniter.php(832): CodeIgniter\Router\Router->handle('medicos/tomarAtencionRapida/[object HTMLButtonElement]')
+ 3 SYSTEMPATH\CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt(Object(CodeIgniter\Router\RouteCollection))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-03 10:20:08 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "[object HTMLButtonElement]"
+[Method: GET, Route: medicos/tomarAtencionRapida/%5Bobject%20HTMLButtonElement%5D]
+in SYSTEMPATH\Router\Router.php on line 741.
+ 1 SYSTEMPATH\Router\Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars('medicos/tomarAtencionRapida/[object HTMLButtonElement]')
+ 2 SYSTEMPATH\CodeIgniter.php(832): CodeIgniter\Router\Router->handle('medicos/tomarAtencionRapida/[object HTMLButtonElement]')
+ 3 SYSTEMPATH\CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt(Object(CodeIgniter\Router\RouteCollection))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-03 10:20:18 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "[object HTMLButtonElement]"
+[Method: GET, Route: medicos/tomarAtencionRapida/%5Bobject%20HTMLButtonElement%5D]
+in SYSTEMPATH\Router\Router.php on line 741.
+ 1 SYSTEMPATH\Router\Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars('medicos/tomarAtencionRapida/[object HTMLButtonElement]')
+ 2 SYSTEMPATH\CodeIgniter.php(832): CodeIgniter\Router\Router->handle('medicos/tomarAtencionRapida/[object HTMLButtonElement]')
+ 3 SYSTEMPATH\CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt(Object(CodeIgniter\Router\RouteCollection))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-03 10:20:35 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "[object HTMLButtonElement]"
+[Method: GET, Route: medicos/tomarAtencionRapida/%5Bobject%20HTMLButtonElement%5D]
+in SYSTEMPATH\Router\Router.php on line 741.
+ 1 SYSTEMPATH\Router\Router.php(207): CodeIgniter\Router\Router->checkDisallowedChars('medicos/tomarAtencionRapida/[object HTMLButtonElement]')
+ 2 SYSTEMPATH\CodeIgniter.php(832): CodeIgniter\Router\Router->handle('medicos/tomarAtencionRapida/[object HTMLButtonElement]')
+ 3 SYSTEMPATH\CodeIgniter.php(455): CodeIgniter\CodeIgniter->tryToRouteIt(Object(CodeIgniter\Router\RouteCollection))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-10-03 12:17:28 --> mysqli_sql_exception: Table 'bd_emergencias.atencion' doesn't exist in C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(327): mysqli->query('\n              ...', 0)
+#1 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Database\BaseConnection.php(738): CodeIgniter\Database\MySQLi\Connection->execute('\n              ...')
+#2 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Database\BaseConnection.php(652): CodeIgniter\Database\BaseConnection->simpleQuery('\n              ...')
+#3 C:\xampp\htdocs\Formulario-Digital\app\Controllers\Administrador\EstadisticasController.php(125): CodeIgniter\Database\BaseConnection->query('\n              ...', Array)
+#4 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Administrador\EstadisticasController->obtenerAtencionesPorHora()
+#5 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Administrador\EstadisticasController))
+#6 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#8 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#9 C:\xampp\htdocs\Formulario-Digital\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#10 {main}
+ERROR - 2025-10-03 12:17:28 --> mysqli_sql_exception: Table 'bd_emergencias.atencion' doesn't exist in C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT COUNT(*)...', 0)
+#1 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Database\BaseConnection.php(738): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(*)...')
+#2 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Database\BaseConnection.php(652): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(*)...')
+#3 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1733): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(*)...', Array, false)
+#4 C:\xampp\htdocs\Formulario-Digital\app\Controllers\Administrador\EstadisticasController.php(32): CodeIgniter\Database\BaseBuilder->countAllResults()
+#5 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Administrador\EstadisticasController->obtenerEstadisticas()
+#6 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Administrador\EstadisticasController))
+#7 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\Formulario-Digital\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-10-03 12:17:28 --> mysqli_sql_exception: Table 'bd_emergencias.atencion' doesn't exist in C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT COUNT(*)...', 0)
+#1 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Database\BaseConnection.php(738): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(*)...')
+#2 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Database\BaseConnection.php(652): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(*)...')
+#3 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1733): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(*)...', Array, false)
+#4 C:\xampp\htdocs\Formulario-Digital\app\Controllers\Administrador\EstadisticasController.php(96): CodeIgniter\Database\BaseBuilder->countAllResults()
+#5 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Administrador\EstadisticasController->obtenerTendencias()
+#6 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Administrador\EstadisticasController))
+#7 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\Formulario-Digital\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-10-03 12:17:42 --> mysqli_sql_exception: Table 'bd_emergencias.atencion' doesn't exist in C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(327): mysqli->query('\n              ...', 0)
+#1 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Database\BaseConnection.php(738): CodeIgniter\Database\MySQLi\Connection->execute('\n              ...')
+#2 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Database\BaseConnection.php(652): CodeIgniter\Database\BaseConnection->simpleQuery('\n              ...')
+#3 C:\xampp\htdocs\Formulario-Digital\app\Controllers\Administrador\EstadisticasController.php(125): CodeIgniter\Database\BaseConnection->query('\n              ...', Array)
+#4 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Administrador\EstadisticasController->obtenerAtencionesPorHora()
+#5 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Administrador\EstadisticasController))
+#6 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#8 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#9 C:\xampp\htdocs\Formulario-Digital\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#10 {main}
+ERROR - 2025-10-03 12:17:42 --> mysqli_sql_exception: Table 'bd_emergencias.atencion' doesn't exist in C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT COUNT(*)...', 0)
+#1 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Database\BaseConnection.php(738): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(*)...')
+#2 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Database\BaseConnection.php(652): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(*)...')
+#3 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1733): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(*)...', Array, false)
+#4 C:\xampp\htdocs\Formulario-Digital\app\Controllers\Administrador\EstadisticasController.php(96): CodeIgniter\Database\BaseBuilder->countAllResults()
+#5 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Administrador\EstadisticasController->obtenerTendencias()
+#6 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Administrador\EstadisticasController))
+#7 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\Formulario-Digital\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-10-03 12:17:42 --> mysqli_sql_exception: Table 'bd_emergencias.atencion' doesn't exist in C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT COUNT(*)...', 0)
+#1 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Database\BaseConnection.php(738): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(*)...')
+#2 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Database\BaseConnection.php(652): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(*)...')
+#3 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1733): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(*)...', Array, false)
+#4 C:\xampp\htdocs\Formulario-Digital\app\Controllers\Administrador\EstadisticasController.php(32): CodeIgniter\Database\BaseBuilder->countAllResults()
+#5 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Administrador\EstadisticasController->obtenerEstadisticas()
+#6 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Administrador\EstadisticasController))
+#7 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\Formulario-Digital\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-10-03 12:19:35 --> mysqli_sql_exception: Table 'bd_emergencias.atencion' doesn't exist in C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(327): mysqli->query('\n            SE...', 0)
+#1 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Database\BaseConnection.php(738): CodeIgniter\Database\MySQLi\Connection->execute('\n            SE...')
+#2 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Database\BaseConnection.php(652): CodeIgniter\Database\BaseConnection->simpleQuery('\n            SE...')
+#3 C:\xampp\htdocs\Formulario-Digital\app\Controllers\Administrador\EstadisticasController.php(167): CodeIgniter\Database\BaseConnection->query('\n            SE...', Array)
+#4 C:\xampp\htdocs\Formulario-Digital\app\Controllers\Administrador\EstadisticasController.php(61): App\Controllers\Administrador\EstadisticasController->calcularTiempoPromedio('2025-10-03')
+#5 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Administrador\EstadisticasController->obtenerEstadisticas()
+#6 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Administrador\EstadisticasController))
+#7 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\Formulario-Digital\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-10-03 12:19:35 --> mysqli_sql_exception: Table 'bd_emergencias.atencion' doesn't exist in C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(327): mysqli->query('\n              ...', 0)
+#1 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Database\BaseConnection.php(738): CodeIgniter\Database\MySQLi\Connection->execute('\n              ...')
+#2 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Database\BaseConnection.php(652): CodeIgniter\Database\BaseConnection->simpleQuery('\n              ...')
+#3 C:\xampp\htdocs\Formulario-Digital\app\Controllers\Administrador\EstadisticasController.php(127): CodeIgniter\Database\BaseConnection->query('\n              ...', Array)
+#4 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Administrador\EstadisticasController->obtenerAtencionesPorHora()
+#5 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Administrador\EstadisticasController))
+#6 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#8 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#9 C:\xampp\htdocs\Formulario-Digital\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#10 {main}
+ERROR - 2025-10-03 12:19:35 --> mysqli_sql_exception: Table 'bd_emergencias.atencion' doesn't exist in C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT COUNT(*)...', 0)
+#1 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Database\BaseConnection.php(738): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(*)...')
+#2 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Database\BaseConnection.php(652): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(*)...')
+#3 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1733): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(*)...', Array, false)
+#4 C:\xampp\htdocs\Formulario-Digital\app\Controllers\Administrador\EstadisticasController.php(98): CodeIgniter\Database\BaseBuilder->countAllResults()
+#5 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Administrador\EstadisticasController->obtenerTendencias()
+#6 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Administrador\EstadisticasController))
+#7 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\Formulario-Digital\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-10-03 12:20:02 --> mysqli_sql_exception: Table 'bd_emergencias.atencion' doesn't exist in C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(327): mysqli->query('\n            SE...', 0)
+#1 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Database\BaseConnection.php(738): CodeIgniter\Database\MySQLi\Connection->execute('\n            SE...')
+#2 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Database\BaseConnection.php(652): CodeIgniter\Database\BaseConnection->simpleQuery('\n            SE...')
+#3 C:\xampp\htdocs\Formulario-Digital\app\Controllers\Administrador\EstadisticasController.php(167): CodeIgniter\Database\BaseConnection->query('\n            SE...', Array)
+#4 C:\xampp\htdocs\Formulario-Digital\app\Controllers\Administrador\EstadisticasController.php(61): App\Controllers\Administrador\EstadisticasController->calcularTiempoPromedio('2025-10-03')
+#5 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\Administrador\EstadisticasController->obtenerEstadisticas()
+#6 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Administrador\EstadisticasController))
+#7 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\Formulario-Digital\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\Formulario-Digital\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+CRITICAL - 2025-10-03 13:41:49 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "medicos/alertas.php"
+[Method: GET, Route: medicos/formulario/6]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(212): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('medicos/alertas.php')
+ 2 SYSTEMPATH\View\View.php(475): CodeIgniter\View\View->render('medicos/alertas', null, true)
+ 3 APPPATH\Views\medicos\medico.php(17): CodeIgniter\View\View->include('medicos/alertas')
+ 4 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\Formulario-Digital\\app\\Views\\medicos\\medico.php')
+ 5 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 6 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('medicos/medico', [], true)
+ 7 APPPATH\Controllers\Medicos\DatosMedicosController.php(124): view('medicos/medico', [...])
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Medicos\DatosMedicosController->formulario('6')
+ 9 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Medicos\DatosMedicosController))
+10 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2025-10-03 13:46:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
