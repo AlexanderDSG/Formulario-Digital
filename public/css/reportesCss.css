@@ -1,0 +1,244 @@
+/* Estilos mejorados para el scroll de DataTable */
+        .dataTables_wrapper {
+            font-size: 0.875rem;
+            width: 100%;
+        }
+
+        /* Bootstrap 5 maneja los estilos de tabla automáticamente */
+
+        /* Contenedor con scroll horizontal */
+        .dataTables_scrollBody {
+            overflow-x: auto !important;
+            overflow-y: auto !important;
+            max-height: 500px !important;
+        }
+
+        .dataTables_scrollHead {
+            overflow: hidden !important;
+            position: relative;
+            border: 0;
+            width: 100%;
+        }
+
+        .dataTables_scrollHeadInner {
+            box-sizing: border-box;
+            width: 100%;
+            padding-right: 0 !important;
+        }
+
+        .dataTables_scrollHeadInner table {
+            margin-bottom: 0 !important;
+            border-bottom: none !important;
+        }
+
+        #tablaReportes {
+            width: 100% !important;
+            margin: 0 !important;
+        }
+
+        #tablaReportes thead th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            border-bottom: 2px solid #dee2e6;
+            white-space: nowrap;
+            padding: 12px 8px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #495057;
+        }
+
+        #tablaReportes tbody td {
+            padding: 8px;
+            white-space: nowrap;
+            font-size: 0.875rem;
+        }
+
+        /* Personalización de badges */
+        .badge-triaje {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.375rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .badge-rojo {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .badge-naranja {
+            background-color: #fd7e14;
+            color: white;
+        }
+
+        .badge-amarillo {
+            background-color: #ffc107;
+            color: #000;
+        }
+
+        .badge-verde {
+            background-color: #198754;
+            color: white;
+        }
+
+        .badge-azul {
+            background-color: #0d6efd;
+            color: white;
+        }
+
+        .filtros-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .stats-card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .stats-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Contenedor mejorado de tabla */
+        .table-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            border: 1px solid #dee2e6;
+            border-radius: 0.375rem;
+        }
+
+        /* Loading overlay mejorado */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .loading-overlay.active {
+            display: flex;
+        }
+
+        /* Estilos de los botones de DataTables - Ahora manejados en header.php */
+
+        /* Badge personalizado - consolidado con estilos de triaje */
+        .badge {
+            display: inline-block;
+            padding: 0.25em 0.6em;
+            font-size: 0.75rem;
+            font-weight: 700;
+            line-height: 1;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            border-radius: 0.25rem;
+        }
+
+        /* Estilos para diagnósticos editables */
+        .diagnosticos-container,
+        .diagnosticos-def-container {
+            min-width: 300px;
+        }
+
+        .diag-item {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 5px;
+        }
+
+        .diag-desc,
+        .diag-desc-def {
+            flex: 1;
+            min-width: 150px;
+            padding: 2px 5px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            font-size: 0.75rem;
+        }
+
+        .diag-cie,
+        .diag-cie-def {
+            width: 60px !important;
+            padding: 2px 5px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            font-size: 0.75rem;
+        }
+
+        /* Estilos para inputs deshabilitados */
+        input[disabled] {
+            background-color: #f5f5f5;
+            cursor: not-allowed;
+        }
+
+        /* Estilos para botones de acción */
+        .acciones-diagnosticos {
+            min-width: 120px;
+            text-align: center;
+        }
+
+        .btn {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.875rem;
+            border-radius: 0.25rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .btn-sm {
+            padding: 0.2rem 0.4rem;
+            font-size: 0.75rem;
+        }
+
+        .btn-primary {
+            background-color: #0d6efd;
+            color: white;
+        }
+
+        .btn-primary:hover:not([disabled]) {
+            background-color: #0b5ed7;
+        }
+
+        .btn-success {
+            background-color: #198754;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background-color: #157347;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .d-none {
+            display: none !important;
+        }
+
+        .contador-modificaciones {
+            margin-top: 5px;
+        }
+
+        /* Ajuste para las columnas de diagnósticos en la tabla */
+        #tablaReportes td:nth-child(24),
+        #tablaReportes td:nth-child(25) {
+            min-width: 320px;
+            vertical-align: top;
+        }
+
+        #tablaReportes th:nth-child(24),
+        #tablaReportes th:nth-child(25) {
+            min-width: 320px;
+        }

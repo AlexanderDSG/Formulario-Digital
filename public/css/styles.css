@@ -1,0 +1,347 @@
+
+/* Estilos generales */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f3f4f6;
+}
+
+.td-middle {
+    vertical-align: middle;
+}
+
+/* Estilos para las tablas y celdas */
+th,
+td {
+    border: 1px solid #e5e7eb;
+    padding: 0.75rem;
+    text-align: left;
+    vertical-align: top;
+    font-size: 0.875rem;
+}
+
+/* Encabezado principal de cada tabla */
+thead th.header-main {
+    background-color: #3b82f6;
+    color: white;
+    font-size: 1.125rem;
+    font-weight: bold;
+    text-align: left;
+    padding: 0.2rem;
+}
+
+/* Estilos para el título de sección con nota a la derecha */
+th.header-main-with-note {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+}
+
+th.header-main-with-note .title-text {
+    text-align: left;
+}
+
+th.header-main-with-note .note-text {
+    font-size: 0.75rem;
+    font-weight: normal;
+    color: #e0e7ff;
+    text-align: right;
+    margin-left: 1rem;
+}
+
+/* Sub-encabezados de columnas y etiquetas de sección */
+th.subheader {
+    background-color: #e5e7eb;
+    color: #374151;
+    font-weight: 600;
+    padding: 0.5rem;
+}
+
+th.section-label {
+    background-color: #e5e7eb;
+    color: #374151;
+    font-weight: 600;
+    vertical-align: middle;
+    text-align: center;
+}
+
+/* Estilos para inputs, selects */
+.form-input,
+.form-select,
+.form-textarea {
+    width: 100%;
+    padding: 0.625rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    box-shadow: inset 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+}
+
+/* Estilos para radio buttons y checkboxes */
+.form-radio,
+.form-checkbox {
+    color: #3b82f6;
+    margin-right: 0.25rem;
+    height: 1rem;
+    width: 1rem;
+}
+
+label.radio-label,
+label.checkbox-label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    margin-right: 1rem;
+    cursor: pointer;
+    font-size: 0.875rem;
+}
+
+label.radio-label span,
+label.checkbox-label span {
+    margin-left: 0.5rem;
+}
+
+.checkbox-group td>div {
+    display: flex;
+    flex-direction: column;
+}
+
+.antecedentes-checkbox-group td>div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+
+.input-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.input-group .form-input {
+    flex-grow: 1;
+}
+
+.input-group .radio-group-horizontal label {
+    margin-right: 0.5rem;
+    margin-bottom: 0;
+}
+
+.input-group .radio-group-horizontal {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+label.form-field-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 0.25rem;
+}
+
+.instruction-note {
+    font-size: 0.875rem;
+    color: #4b5563;
+    padding: 0.5rem;
+    background-color: #f9fafb;
+    border-radius: 0.25rem;
+    text-align: left;
+}
+
+.form-page {
+    display: none;
+    /* Ocultar páginas por defecto EN PANTALLA */
+}
+
+.form-page.active {
+    display: block;
+    /* Mostrar la página activa EN PANTALLA */
+}
+
+@media print {
+    #seccionHContenedor {
+        padding-top: 0.5cm;
+    }
+
+    @page {
+        size: A4 portrait;
+        margin: 2cm;
+        /* Margen unificado para simplificar */
+        margin-bottom: 2.5cm;
+
+        @bottom-left {
+            content: "SNS-MSP/HCU-FORM.008/2021";
+            font-size: 8pt;
+            color: #555;
+            vertical-align: bottom;
+        }
+
+        @bottom-right {
+            content: "EMERGENCIA (" counter(page) ")";
+            font-size: 8pt;
+            color: #555;
+            vertical-align: bottom;
+            text-align: right;
+        }
+
+    }
+
+
+    body {
+        background-color: #fff !important;
+        font-size: 8pt;
+        /* Reducción general de fuente para impresión */
+        -webkit-print-color-adjust: exact !important;
+        color-adjust: exact !important;
+        margin: 0;
+        padding: 0;
+        counter-reset: page 0;
+    }
+
+    .no-print {
+        display: none !important;
+        /* Oculta los controles de paginación y botones al imprimir */
+    }
+
+    .container {
+        max-width: 100% !important;
+        width: 100% !important;
+        box-shadow: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: none !important;
+    }
+
+    .form-page {
+        display: block !important;
+        page-break-before: always;
+    }
+
+    .container.space-y-4> :not([hidden])~ :not([hidden]) {
+        --tw-space-y-reverse: 0;
+        margin-top: calc(0.3cm * calc(1 - var(--tw-space-y-reverse))) !important;
+        margin-bottom: calc(0.3cm * var(--tw-space-y-reverse)) !important;
+    }
+
+
+    table {
+        width: 100% !important;
+        border-collapse: collapse !important;
+    }
+
+    th,
+    td {
+        padding: 1.5mm 2mm !important;
+        font-size: 7pt !important;
+        border: 1px solid #ccc !important;
+    }
+
+    thead th.header-main {
+        font-size: 9pt !important;
+        padding: 2mm !important;
+        text-align: left !important;
+    }
+
+    th.header-main-with-note {
+        text-align: left !important;
+    }
+
+    th.header-main-with-note .note-text {
+        font-size: 6pt !important;
+    }
+
+    th.subheader,
+    th.section-label {
+        font-size: 7.5pt !important;
+        padding: 1.5mm !important;
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+        font-size: 7pt !important;
+        padding: 0.5mm 1mm !important;
+        /* Padding mínimo */
+        border-radius: 0 !important;
+        border: 1px solid #aaa !important;
+    }
+
+    textarea.form-textarea {
+        min-height: 2em;
+    }
+
+    label.radio-label,
+    label.checkbox-label {
+        font-size: 7pt !important;
+        margin-bottom: 0.5mm !important;
+        margin-right: 2mm !important;
+    }
+
+    label.radio-label span,
+    label.checkbox-label span {
+        margin-left: 1mm !important;
+    }
+
+    .form-radio,
+    .form-checkbox {
+        height: 0.8em !important;
+        width: 0.8em !important;
+        margin-right: 0.5mm !important;
+    }
+
+    label.form-field-label {
+        font-size: 6.5pt !important;
+        margin-bottom: 0.2mm !important;
+    }
+
+    .instruction-note {
+        font-size: 6.5pt !important;
+        padding: 0.5mm !important;
+    }
+
+    .input-group {
+        gap: 1mm !important;
+    }
+
+    .input-group .form-input.w-20 {
+        padding: 0.5mm !important;
+    }
+
+    span.font-normal.text-xs {
+        display: none !important;
+    }
+
+    thead th.header-main,
+    th.subheader,
+    th.section-label {
+        -webkit-print-color-adjust: exact !important;
+        color-adjust: exact !important;
+    }
+
+    .no-print {
+        display: none !important;
+    }
+
+    table,
+    tr,
+    td,
+    th,
+    tbody,
+    thead,
+    tfoot {
+        page-break-inside: avoid !important;
+    }
+}

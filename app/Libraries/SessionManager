@@ -1,0 +1,150 @@
+<?php
+
+namespace App\Libraries;
+
+class SessionManager
+{
+    private static $sessions = [];
+    
+    public static function createUserSession($userData)
+    {
+        $sessionId = uniqid('sess_', true);
+        $userId = $userData['usu_id'];
+        
+        // Almacenar la sesión en un array asociativo
+        self::$sessions[$sessionId] = [
+            'usu_id' => $userId,
+            'usu_nombre' => $userData['usu_nombre'],
+            'usu_apellido' => $userData['usu_apellido'],
+            'rol_id' => $userData['rol_id'],
+            'rol_nombre' => $userData['rol_nombre'],
+            'created_at' => time(),
+            'last_activity' => time()
+        ];
+        
+        // Guardar el ID de sesión en la sesión de PHP
+        session()->set('current_session_id', $sessionId);
+        session()->set('logged_in', true);
+        
+        // También guardar en cookies con tiempo de vida específico
+        setcookie('user_session_' . $userId, $sessionId, time() + 3600, '/');
+        
+        return $sessionId;
+    }
+    
+    public static function getCurrentUserData()
+    {
+        $sessionId = session()->get('current_session_id');
+        
+        if (!$sessionId || !isset(self::$sessions[$sessionId])) {
+            return null;
+        }
+        
+        // Actualizar última actividad
+        self::$sessions[$sessionId]['last_activity'] = time();
+        
+        return self::$sessions[$sessionId];
+    }
+    
+    public static function destroyUserSession($sessionId = null)
+    {
+        if (!$sessionId) {
+            $sessionId = session()->get('current_session_id');
+        }
+        
+        if ($sessionId && isset(self::$sessions[$sessionId])) {
+            $userId = self::$sessions[$sessionId]['usu_id'];
+            
+            // Remover la sesión específica
+            unset(self::$sessions[$sessionId]);
+            
+            // Limpiar cookie específica
+            setcookie('user_session_' . $userId, '', time() - 3600, '/');
+            
+            // Solo remover las variables de sesión relacionadas
+            session()->remove('current_session_id');
+            session()->remove('logged_in');
+        }
+    }
+    
+    public static function isValidSession($sessionId = null)
+    {
+        if (!$sessionId) {
+            $sessionId = session()->get('current_session_id');
+        }
+        
+        if (!$sessionId || !isset(self::$sessions[$sessionId])) {
+            return false;
+        }
+        
+        // Verificar si la sesión no ha expirado (ejemplo: 1 hora)
+        $lastActivity = self::$sessions[$sessionId]['last_activity'];
+        if (time() - $lastActivity > 3600) {
+            self::destroyUserSession($sessionId);
+            return false;
+        }
+        
+        return true;
+    }
+    
+    public static function getActiveSessions()
+    {
+        return self::$sessions;
+    }
+    
+    public static function cleanExpiredSessions()
+    {
+        $currentTime = time();
+        foreach (self::$sessions as $sessionId => $sessionData) {
+            if ($currentTime - $sessionData['last_activity'] > 3600) {
+                self::destroyUserSession($sessionId);
+            }
+        }
+    }
+}
+
+// Uso en LoginController.php:
+
+namespace App\Controllers;
+
+use App\Models\UsuarioModel;
+use App\Libraries\SessionManager;
+
+class LoginController extends BaseController
+{
+    public function ingresar()
+    {
+        $usuario = $this->request->getPost('usuario');
+        $password = $this->request->getPost('password');
+
+        $usuarioModel = new UsuarioModel();
+        $usuarioData = $usuarioModel->getUsuarioConRolPorNombre($usuario);
+
+        if ($usuarioData && hash_equals($usuarioData['usu_password'], hash('sha256', $password))) {
+            
+            // Usar el SessionManager en lugar de session() directamente
+            $sessionId = SessionManager::createUserSession($usuarioData);
+            
+            // Redirección según rol
+            switch ($usuarioData['rol_id']) {
+                case 1:
+                    return redirect()->to('/admisiones');
+                case 2:
+                    return redirect()->to('/enfermeria');
+                case 3:
+                    return redirect()->to('/medicos');
+                default:
+                    return redirect()->to('/login')->with('error', 'Rol no autorizado');
+            }
+        }
+
+        return redirect()->back()->with('error', 'Usuario o contraseña incorrectos');
+    }
+
+    public function logout()
+    {
+        // Destruir solo la sesión específica del usuario actual
+        SessionManager::destroyUserSession();
+        return redirect()->to('/login');
+    }
+}

@@ -1,0 +1,151 @@
+<?php
+
+namespace App\Models\Admision;
+
+use CodeIgniter\Model;
+
+class PacienteHospitalModel extends Model
+{
+    protected $DBGroup = 'hospital';
+    private $connectionAvailable = null;
+
+    /**
+     * Verificar si la conexión al hospital está disponible
+     */
+    private function isConnectionAvailable()
+    {
+        if ($this->connectionAvailable !== null) {
+            return $this->connectionAvailable;
+        }
+
+        try {
+            // Intentar una consulta simple para verificar conectividad
+            $this->db->query("SELECT 1");
+            $this->connectionAvailable = true;
+            return true;
+        } catch (\Exception $e) {
+            log_message('warning', 'Conexión hospital no disponible: ' . $e->getMessage());
+            $this->connectionAvailable = false;
+            return false;
+        }
+    }
+
+    public function buscarPorCedula($cedula)
+    {
+        if (!$this->isConnectionAvailable()) {
+            throw new \Exception('Base de datos del hospital no disponible. Verifique la conexión de red o que el driver ODBC esté instalado.');
+        }
+
+        $sql = "SELECT
+                nro_historia,
+                cedula,
+                apellidos,
+                nombres,
+                estado_civil,
+                sexo,
+                telefonos,
+                fecha_nac,
+                id_provincia,
+                id_canton,
+                id_parroquia,
+                id_nacionalidad,
+                ocupacion,
+                nro_iess,
+                direccion,
+                nombres_avisar,
+                relacion_avisar,
+                direccion_avisar,
+                telefonos_avisar
+            FROM HISTORIAS
+            WHERE REPLACE(cedula, '-', '') = REPLACE(?, '-', '')
+        ";
+
+        return $this->db->query($sql, [$cedula])->getRowArray();
+    }
+
+    public function buscarPorApellido($apellido)
+    {
+        if (!$this->isConnectionAvailable()) {
+            throw new \Exception('Base de datos del hospital no disponible. Verifique la conexión de red o que el driver ODBC esté instalado.');
+        }
+
+        $sql = "SELECT
+                nro_historia,
+                cedula,
+                apellidos,
+                nombres,
+                estado_civil,
+                sexo,
+                telefonos,
+                fecha_nac,
+                id_provincia,
+                id_canton,
+                id_parroquia,
+                id_nacionalidad,
+                ocupacion,
+                nro_iess,
+                direccion,
+                nombres_avisar,
+                relacion_avisar,
+                direccion_avisar,
+                telefonos_avisar
+            FROM HISTORIAS
+            WHERE CONCAT(apellidos, ' ', nombres) LIKE ?
+            ORDER BY apellidos, nombres
+            LIMIT 1
+        ";
+
+        return $this->db->query($sql, ['%' . $apellido . '%'])->getRowArray();
+    }
+
+    public function buscarSugerenciasPorApellido($termino)
+    {
+        if (!$this->isConnectionAvailable()) {
+            return []; // Retornar array vacío si no hay conexión
+        }
+
+        $sql = "SELECT DISTINCT
+                apellidos,
+                nombres
+            FROM HISTORIAS
+            WHERE CONCAT(apellidos, ' ', nombres) LIKE ?
+            ORDER BY apellidos, nombres
+            LIMIT 15
+        ";
+
+        return $this->db->query($sql, ['%' . $termino . '%'])->getResultArray();
+    }
+
+    public function buscarPorHistoria($historia)
+    {
+        if (!$this->isConnectionAvailable()) {
+            throw new \Exception('Base de datos del hospital no disponible. Verifique la conexión de red o que el driver ODBC esté instalado.');
+        }
+
+        $sql = "SELECT
+                nro_historia,
+                cedula,
+                apellidos,
+                nombres,
+                estado_civil,
+                sexo,
+                telefonos,
+                fecha_nac,
+                id_provincia,
+                id_canton,
+                id_parroquia,
+                id_nacionalidad,
+                ocupacion,
+                nro_iess,
+                direccion,
+                nombres_avisar,
+                relacion_avisar,
+                direccion_avisar,
+                telefonos_avisar
+            FROM HISTORIAS
+            WHERE nro_historia = ?
+        ";
+
+        return $this->db->query($sql, [$historia])->getRowArray();
+    }
+}
