@@ -415,7 +415,7 @@ async function generatePDF(datosPersonalizados = null) {
 
 
         // Obtener imágenes del formulario
-        const baseUrl = window.APP_URLS?.baseUrl || window.location.origin + '/Formulario-Digital01/';
+        const baseUrl = window.APP_URLS?.baseUrl || window.location.origin + '/Formulario-Digital/';
         const rutaImagen1 = baseUrl + 'public/img/FormularioA.jpg';
         const rutaImagen2 = baseUrl + 'public/img/FormularioP.jpg';
 
@@ -462,10 +462,10 @@ async function generatePDF(datosPersonalizados = null) {
         // Generar nombre del archivo: formulario_008_APELLIDO_NOMBRE_CEDULA_FECHA.pdf
         let nombreArchivo;
         if (primerApellido && primerNombre) {
-            nombreArchivo = `formulario_008_${primerApellido}_${primerNombre}_${cedula}_${fechaAtencion}.pdf`;
+            nombreArchivo = `Formulario_008_${primerApellido}_${primerNombre}_${cedula}_${fechaAtencion}.pdf`;
         } else {
             // Fallback si no hay nombre completo
-            nombreArchivo = `formulario_008_${cedula}_${fechaAtencion}.pdf`;
+            nombreArchivo = `Formulario_008_${cedula}_${fechaAtencion}.pdf`;
         }
 
         // // Descargar PDF en el navegador
@@ -477,7 +477,7 @@ async function generatePDF(datosPersonalizados = null) {
             const pdfBase64 = pdf.output('datauristring');
 
             // Enviar al servidor
-            const baseUrl = window.APP_URLS?.baseUrl || window.location.origin + '/Formulario-Digital01/';
+            const baseUrl = window.APP_URLS?.baseUrl || window.location.origin + '/Formulario-Digital/';
             const response = await fetch(baseUrl + 'administrador/pdf/guardar-008', {
                 method: 'POST',
                 headers: {
