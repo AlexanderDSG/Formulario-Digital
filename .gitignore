@@ -50,30 +50,6 @@ CLAUDE.md
 Vagrantfile
 
 #-------------------------
-# Archivos Delicados del Proyecto
-#-------------------------
-# Respaldos de base de datos
-*.sql
-*.sql.gz
-*.sql.zip
-respaldos_log.json
-
-# PDFs generados (contienen datos de pacientes)
-*.pdf
-
-# Carpetas de respaldos y PDFs
-Respaldos/
-Respaldos_BD/
-PDF/
-PDF_Formularios/
-
-# Scripts con credenciales
-respaldo_diario.bat
-respaldo_semanal.bat
-respaldo_mensual.bat
-configurar_respaldos_automaticos.bat
-
-#-------------------------
 # Temporary Files
 #-------------------------
 writable/cache/*
@@ -108,17 +84,6 @@ tests/coverage*
 
 # Don't save phpunit under version control.
 phpunit
-
-#-------------------------
-# Composer
-#-------------------------
-vendor/
-
-#-------------------------
-# Node Modules
-#-------------------------
-node_modules/
-package-lock.json
 
 #-------------------------
 # IDE / Development Files
