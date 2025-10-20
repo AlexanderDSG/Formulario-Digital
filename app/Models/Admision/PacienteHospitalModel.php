@@ -69,7 +69,7 @@ class PacienteHospitalModel extends Model
             throw new \Exception('Base de datos del hospital no disponible. Verifique la conexión de red o que el driver ODBC esté instalado.');
         }
 
-        $sql = "SELECT
+        $sql = "SELECT TOP 1
                 nro_historia,
                 cedula,
                 apellidos,
@@ -90,9 +90,8 @@ class PacienteHospitalModel extends Model
                 direccion_avisar,
                 telefonos_avisar
             FROM HISTORIAS
-            WHERE CONCAT(apellidos, ' ', nombres) LIKE ?
+            WHERE apellidos + ' ' + nombres LIKE ?
             ORDER BY apellidos, nombres
-            LIMIT 1
         ";
 
         return $this->db->query($sql, ['%' . $apellido . '%'])->getRowArray();
@@ -104,13 +103,12 @@ class PacienteHospitalModel extends Model
             return []; // Retornar array vacío si no hay conexión
         }
 
-        $sql = "SELECT DISTINCT
+        $sql = "SELECT DISTINCT TOP 15
                 apellidos,
                 nombres
             FROM HISTORIAS
-            WHERE CONCAT(apellidos, ' ', nombres) LIKE ?
+            WHERE apellidos + ' ' + nombres LIKE ?
             ORDER BY apellidos, nombres
-            LIMIT 15
         ";
 
         return $this->db->query($sql, ['%' . $termino . '%'])->getResultArray();

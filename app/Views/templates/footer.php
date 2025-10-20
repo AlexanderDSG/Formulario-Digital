@@ -20,6 +20,7 @@
 
 <!-- Scripts específicos del sistema -->
 <script src="<?= base_url('public/js/jspdf.min.js') ?>"></script>
+
 <?php if (session()->get('rol_id') == 2): ?>
     <script src="<?= base_url('public/js/admision/buscar_paciente.js') ?>"></script>
     <script src="<?= base_url('public/js/admision/buscar_hospital.js') ?>"></script>
