@@ -129,32 +129,43 @@ class BusquedaHospitalController extends BaseController
         }
     }
 
-    public function autocompletarApellidos()
-    {
-        $request = \Config\Services::request();
-        $term = $request->getGet('term');
-        
-        if (empty($term) || strlen($term) < 2) {
-            return $this->response->setJSON([]);
-        }
+   public function autocompletarApellidos()
+{
+    $request = \Config\Services::request();
+    $term = $request->getGet('term');
+    
+    if (empty($term) || strlen($term) < 2) {
+        return $this->response->setJSON([]);
+    }
 
-        try {
-            $hospitalModel = new PacienteHospitalModel();
-            $sugerencias = $hospitalModel->buscarSugerenciasPorApellido($term);
+    try {
+        $hospitalModel = new PacienteHospitalModel();
+        $sugerencias = $hospitalModel->buscarSugerenciasPorApellido($term);
+        
+        $resultado = [];
+        foreach ($sugerencias as $sugerencia) {
+            // Limpiar espacios en blanco adicionales
+            $apellidos = trim($sugerencia['apellidos']);
+            $nombres = trim($sugerencia['nombres']);
             
-            $resultado = [];
-            foreach ($sugerencias as $sugerencia) {
-                $nombreCompleto = $sugerencia['apellidos'] . ' ' . $sugerencia['nombres'];
-                $resultado[] = [
-                    'label' => $nombreCompleto,
-                    'value' => $nombreCompleto
-                ];
+            // Saltar si está vacío
+            if (empty($apellidos) && empty($nombres)) {
+                continue;
             }
             
-            return $this->response->setJSON($resultado);
-        } catch (\Exception $e) {
-            log_message('error', 'Error en autocompletar apellidos hospital: ' . $e->getMessage());
-            return $this->response->setJSON([]);
+            $nombreCompleto = $apellidos . ' ' . $nombres;
+            $nombreCompleto = trim($nombreCompleto);
+            
+            $resultado[] = [
+                'label' => $nombreCompleto,
+                'value' => $nombreCompleto
+            ];
         }
+        
+        return $this->response->setJSON($resultado);
+    } catch (\Exception $e) {
+        log_message('error', 'Error en autocompletar apellidos hospital: ' . $e->getMessage());
+        return $this->response->setJSON([]);
     }
+}
 }

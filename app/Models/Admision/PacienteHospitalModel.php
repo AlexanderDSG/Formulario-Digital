@@ -104,8 +104,8 @@ class PacienteHospitalModel extends Model
         }
 
         $sql = "SELECT DISTINCT TOP 15
-                apellidos,
-                nombres
+                LTRIM(RTRIM(apellidos)) as apellidos,
+                LTRIM(RTRIM(nombres)) as nombres
             FROM HISTORIAS
             WHERE apellidos + ' ' + nombres LIKE ?
             ORDER BY apellidos, nombres
