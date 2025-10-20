@@ -106,15 +106,16 @@ class PacienteHospitalModel extends Model
             return []; // Retornar array vacío si no hay conexión
         }
 
-        $sql = "SELECT DISTINCT TOP 15
+        // Optimización: buscar solo por apellidos primero (más rápido)
+        $sql = "SELECT DISTINCT TOP 10
                 LTRIM(RTRIM(apellidos)) as apellidos,
                 LTRIM(RTRIM(nombres)) as nombres
             FROM HISTORIAS
-            WHERE apellidos + ' ' + nombres LIKE ?
+            WHERE apellidos LIKE ?
             ORDER BY apellidos, nombres
         ";
 
-        return $this->db->query($sql, ['%' . $termino . '%'])->getResultArray();
+        return $this->db->query($sql, [$termino . '%'])->getResultArray();
     }
 
     public function buscarPorHistoria($historia)
