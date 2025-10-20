@@ -730,7 +730,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         new AutoComplete(apellidoInput, {
             minLength: 3, // Aumentado a 3 caracteres para búsquedas más rápidas
-            maxResults: 10, // Reducido a 10 resultados
+            maxResults: 30, // Reducido a 10 resultados
             source: async (term) => {
                 const fuente = document.querySelector('input[name="fuente_datos"]:checked')?.value;
 
