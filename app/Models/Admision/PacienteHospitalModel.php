@@ -69,11 +69,14 @@ class PacienteHospitalModel extends Model
             throw new \Exception('Base de datos del hospital no disponible. Verifique la conexión de red o que el driver ODBC esté instalado.');
         }
 
+        // Limpiar espacios extras del término de búsqueda
+        $apellidoLimpio = trim(preg_replace('/\s+/', ' ', $apellido));
+
         $sql = "SELECT TOP 1
                 nro_historia,
                 cedula,
-                apellidos,
-                nombres,
+                LTRIM(RTRIM(apellidos)) as apellidos,
+                LTRIM(RTRIM(nombres)) as nombres,
                 estado_civil,
                 sexo,
                 telefonos,
@@ -90,11 +93,11 @@ class PacienteHospitalModel extends Model
                 direccion_avisar,
                 telefonos_avisar
             FROM HISTORIAS
-            WHERE apellidos + ' ' + nombres LIKE ?
+            WHERE LTRIM(RTRIM(apellidos)) + ' ' + LTRIM(RTRIM(nombres)) LIKE ?
             ORDER BY apellidos, nombres
         ";
 
-        return $this->db->query($sql, ['%' . $apellido . '%'])->getRowArray();
+        return $this->db->query($sql, ['%' . $apellidoLimpio . '%'])->getRowArray();
     }
 
     public function buscarSugerenciasPorApellido($termino)
