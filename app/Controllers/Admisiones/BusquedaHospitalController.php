@@ -140,6 +140,7 @@ class BusquedaHospitalController extends BaseController
         $request = \Config\Services::request();
         $term = $request->getGet('term');
 
+        // Mínimo 2 caracteres
         if (empty($term) || strlen($term) < 2) {
             return $this->response->setJSON([]);
         }
@@ -147,8 +148,6 @@ class BusquedaHospitalController extends BaseController
         try {
             $hospitalModel = new PacienteHospitalModel();
             $sugerencias = $hospitalModel->buscarSugerenciasPorApellido($term);
-
-            log_message('debug', '🔍 Sugerencias encontradas: ' . count($sugerencias));
 
             $resultado = [];
             foreach ($sugerencias as $sugerencia) {
@@ -162,9 +161,7 @@ class BusquedaHospitalController extends BaseController
                 }
 
                 $nombreCompleto = $apellidos . ' ' . $nombres;
-                $nombreCompleto = trim($nombreCompleto); // Limpiar espacios finales
-
-                log_message('debug', '📝 Agregando sugerencia: ' . $nombreCompleto);
+                $nombreCompleto = trim($nombreCompleto);
 
                 $resultado[] = [
                     'label' => $nombreCompleto,

@@ -72,6 +72,7 @@ class PacienteHospitalModel extends Model
         // Limpiar espacios extras del término de búsqueda
         $apellidoLimpio = trim(preg_replace('/\s+/', ' ', $apellido));
 
+        // Buscar por coincidencia exacta primero (más rápido)
         $sql = "SELECT TOP 1
                 nro_historia,
                 cedula,
@@ -93,11 +94,42 @@ class PacienteHospitalModel extends Model
                 direccion_avisar,
                 telefonos_avisar
             FROM HISTORIAS
-            WHERE LTRIM(RTRIM(apellidos)) + ' ' + LTRIM(RTRIM(nombres)) LIKE ?
-            ORDER BY apellidos, nombres
+            WHERE LTRIM(RTRIM(apellidos)) + ' ' + LTRIM(RTRIM(nombres)) = ?
         ";
 
-        return $this->db->query($sql, ['%' . $apellidoLimpio . '%'])->getRowArray();
+        $resultado = $this->db->query($sql, [$apellidoLimpio])->getRowArray();
+
+        // Si no encuentra coincidencia exacta, buscar con LIKE
+        if (!$resultado) {
+            $sql = "SELECT TOP 1
+                    nro_historia,
+                    cedula,
+                    LTRIM(RTRIM(apellidos)) as apellidos,
+                    LTRIM(RTRIM(nombres)) as nombres,
+                    estado_civil,
+                    sexo,
+                    telefonos,
+                    fecha_nac,
+                    id_provincia,
+                    id_canton,
+                    id_parroquia,
+                    id_nacionalidad,
+                    ocupacion,
+                    nro_iess,
+                    direccion,
+                    nombres_avisar,
+                    relacion_avisar,
+                    direccion_avisar,
+                    telefonos_avisar
+                FROM HISTORIAS
+                WHERE LTRIM(RTRIM(apellidos)) + ' ' + LTRIM(RTRIM(nombres)) LIKE ?
+                ORDER BY apellidos, nombres
+            ";
+
+            $resultado = $this->db->query($sql, ['%' . $apellidoLimpio . '%'])->getRowArray();
+        }
+
+        return $resultado;
     }
 
     public function buscarSugerenciasPorApellido($termino)
@@ -106,8 +138,8 @@ class PacienteHospitalModel extends Model
             return []; // Retornar array vacío si no hay conexión
         }
 
-        // Optimización: buscar solo por apellidos primero (más rápido)
-        $sql = "SELECT DISTINCT TOP 10
+        // Buscar primero por apellidos (más común y rápido)
+        $sql = "SELECT TOP 10
                 LTRIM(RTRIM(apellidos)) as apellidos,
                 LTRIM(RTRIM(nombres)) as nombres
             FROM HISTORIAS
@@ -115,7 +147,30 @@ class PacienteHospitalModel extends Model
             ORDER BY apellidos, nombres
         ";
 
-        return $this->db->query($sql, [$termino . '%'])->getResultArray();
+        $resultadosApellidos = $this->db->query($sql, [$termino . '%'])->getResultArray();
+
+        // Si ya hay resultados suficientes, retornar
+        if (count($resultadosApellidos) >= 10) {
+            return $resultadosApellidos;
+        }
+
+        // Si no, buscar también en nombre completo
+        $sql2 = "SELECT TOP 10
+                LTRIM(RTRIM(apellidos)) as apellidos,
+                LTRIM(RTRIM(nombres)) as nombres
+            FROM HISTORIAS
+            WHERE apellidos + ' ' + nombres LIKE ?
+            AND apellidos NOT LIKE ?
+            ORDER BY apellidos, nombres
+        ";
+
+        $resultadosCompletos = $this->db->query($sql2, ['%' . $termino . '%', $termino . '%'])->getResultArray();
+
+        // Combinar resultados sin duplicados
+        $resultados = array_merge($resultadosApellidos, $resultadosCompletos);
+        
+        // Limitar a 10 resultados totales
+        return array_slice($resultados, 0, 10);
     }
 
     public function buscarPorHistoria($historia)

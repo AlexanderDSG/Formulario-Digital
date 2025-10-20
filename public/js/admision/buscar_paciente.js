@@ -729,8 +729,8 @@ document.addEventListener('DOMContentLoaded', function () {
         apellidoInput.setAttribute('data-autocomplete-initialized', 'true');
 
         new AutoComplete(apellidoInput, {
-            minLength: 2,
-            maxResults: 15,
+            minLength: 2, // Mínimo 2 caracteres
+            maxResults: 10, // Máximo 10 resultados
             source: async (term) => {
                 const fuente = document.querySelector('input[name="fuente_datos"]:checked')?.value;
 
@@ -755,6 +755,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             },
             onSelect: (suggestion) => {
+                // Puedes agregar lógica adicional aquí si lo necesitas
             }
         });
     }
