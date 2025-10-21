@@ -10,6 +10,10 @@ CLAUDE.md
 # as it poses a security risk.
 .env
 
+writable/logs
+writable/session
+uploads/
+
 # Visual Studio Code
 .vscode/
 

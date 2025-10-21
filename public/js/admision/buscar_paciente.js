@@ -413,6 +413,7 @@ document.getElementById('btn-buscar').addEventListener('click', async () => {
                 radio.checked = false;
             });
         }
+        mostrarAlerta('exito', 'Datos cargados correctamente.');
     } catch (error) {
         console.error('Error al buscar paciente:', error);
         mostrarAlerta('error', 'Ocurrió un error al realizar la búsqueda.');
