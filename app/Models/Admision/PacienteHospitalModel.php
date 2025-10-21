@@ -19,7 +19,7 @@ class PacienteHospitalModel extends Model
         }
 
         try {
-            // Intentar una consulta simple para verificar conectividad
+            // Verificar conectividad
             $this->db->query("SELECT 1");
             $this->connectionAvailable = true;
             return true;
@@ -138,39 +138,19 @@ class PacienteHospitalModel extends Model
             return []; // Retornar array vacío si no hay conexión
         }
 
-        // Buscar primero por apellidos (más común y rápido)
+        // Limpiar el término de búsqueda
+        $terminoLimpio = trim($termino);
+
+        // Usar WITH (NOLOCK) para evitar bloqueos en la BD del hospital
         $sql = "SELECT TOP 10
                 LTRIM(RTRIM(apellidos)) as apellidos,
                 LTRIM(RTRIM(nombres)) as nombres
-            FROM HISTORIAS
-            WHERE apellidos LIKE ?
+            FROM HISTORIAS WITH (NOLOCK)
+            WHERE LTRIM(RTRIM(apellidos)) + ' ' + LTRIM(RTRIM(nombres)) LIKE ?
             ORDER BY apellidos, nombres
         ";
 
-        $resultadosApellidos = $this->db->query($sql, [$termino . '%'])->getResultArray();
-
-        // Si ya hay resultados suficientes, retornar
-        if (count($resultadosApellidos) >= 10) {
-            return $resultadosApellidos;
-        }
-
-        // Si no, buscar también en nombre completo
-        $sql2 = "SELECT TOP 10
-                LTRIM(RTRIM(apellidos)) as apellidos,
-                LTRIM(RTRIM(nombres)) as nombres
-            FROM HISTORIAS
-            WHERE apellidos + ' ' + nombres LIKE ?
-            AND apellidos NOT LIKE ?
-            ORDER BY apellidos, nombres
-        ";
-
-        $resultadosCompletos = $this->db->query($sql2, ['%' . $termino . '%', $termino . '%'])->getResultArray();
-
-        // Combinar resultados sin duplicados
-        $resultados = array_merge($resultadosApellidos, $resultadosCompletos);
-        
-        // Limitar a 10 resultados totales
-        return array_slice($resultados, 0, 10);
+        return $this->db->query($sql, ['%' . $terminoLimpio . '%'])->getResultArray();
     }
 
     public function buscarPorHistoria($historia)

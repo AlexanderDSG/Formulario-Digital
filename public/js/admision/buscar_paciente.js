@@ -728,34 +728,47 @@ document.addEventListener('DOMContentLoaded', function () {
         // Marcar como inicializado
         apellidoInput.setAttribute('data-autocomplete-initialized', 'true');
 
+        // Variable para almacenar el timeout del debounce
+        let debounceTimer;
+
         new AutoComplete(apellidoInput, {
-            minLength: 2, // Mínimo 2 caracteres
-            maxResults: 10, // Máximo 10 resultados
+            minLength: 3,
+            maxResults: 10,
             source: async (term) => {
                 const fuente = document.querySelector('input[name="fuente_datos"]:checked')?.value;
 
                 if (!fuente) return [];
 
-                let url = '';
-                if (fuente === 'local') {
-                    url = 'admisiones/formulario/autocompletar-apellidos';
-                } else if (fuente === 'hospital') {
-                    url = 'admisiones/busqueda-hospital/autocompletar-apellidos';
+                // Aplicar debounce solo para el hospital (BD externa)
+                if (fuente === 'hospital') {
+                    return new Promise((resolve) => {
+                        clearTimeout(debounceTimer);
+                        debounceTimer = setTimeout(async () => {
+                            try {
+                                const url = 'admisiones/busqueda-hospital/autocompletar-apellidos';
+                                const response = await fetch(`${url}?term=${encodeURIComponent(term)}`);
+                                const data = await response.json();
+                                resolve(data);
+                            } catch (error) {
+                                console.error('Error en autocompletado:', error);
+                                resolve([]);
+                            }
+                        }, 300); // Esperar 300ms después de que el usuario deje de escribir
+                    });
                 } else {
-                    return [];
-                }
-
-                try {
-                    const response = await fetch(`${url}?term=${encodeURIComponent(term)}`);
-                    const data = await response.json();
-                    return data;
-                } catch (error) {
-                    console.error('Error en autocompletado:', error);
-                    return [];
+                    // Para BD local, sin debounce (es rápida)
+                    try {
+                        const url = 'admisiones/formulario/autocompletar-apellidos';
+                        const response = await fetch(`${url}?term=${encodeURIComponent(term)}`);
+                        const data = await response.json();
+                        return data;
+                    } catch (error) {
+                        console.error('Error en autocompletado:', error);
+                        return [];
+                    }
                 }
             },
             onSelect: (suggestion) => {
-                // Puedes agregar lógica adicional aquí si lo necesitas
             }
         });
     }

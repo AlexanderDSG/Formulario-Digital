@@ -140,8 +140,8 @@ class BusquedaHospitalController extends BaseController
         $request = \Config\Services::request();
         $term = $request->getGet('term');
 
-        // Mínimo 2 caracteres
-        if (empty($term) || strlen($term) < 2) {
+        // Requerir mínimo 3 caracteres para reducir carga en BD del hospital
+        if (empty($term) || strlen($term) < 3) {
             return $this->response->setJSON([]);
         }
 
@@ -160,8 +160,9 @@ class BusquedaHospitalController extends BaseController
                     continue;
                 }
 
+                // Crear nombre completo con formato consistente
                 $nombreCompleto = $apellidos . ' ' . $nombres;
-                $nombreCompleto = trim($nombreCompleto);
+                $nombreCompleto = trim(preg_replace('/\s+/', ' ', $nombreCompleto));
 
                 $resultado[] = [
                     'label' => $nombreCompleto,
