@@ -5,7 +5,7 @@ const PDF_CONFIG = {
     DEBUG: true,
     PAGE_WIDTH: 765,
     PAGE_HEIGHT: 1050,
-    FONT_SIZE: 7,
+    FONT_SIZE: 8,
 };
 
 // === ESTADO GLOBAL ===
@@ -425,7 +425,7 @@ async function generatePDF(datosPersonalizados = null) {
         const pdf = new jsPDF('p', 'px', [PDF_CONFIG.PAGE_WIDTH, PDF_CONFIG.PAGE_HEIGHT]);
 
         // PÁGINA 1
-        pdf.addImage(image1, 'JPEG', 0, 10, PDF_CONFIG.PAGE_WIDTH, PDF_CONFIG.PAGE_HEIGHT);
+        pdf.addImage(image1, 'JPEG', 0, 0, PDF_CONFIG.PAGE_WIDTH, PDF_CONFIG.PAGE_HEIGHT);
         pdf.setFontSize(PDF_CONFIG.FONT_SIZE);
 
         llenarSeccionAPDF(pdf, datos.seccionA);
@@ -574,30 +574,33 @@ function formatearHora008(hora) {
 function llenarSeccionAPDF(pdf, seccionA) {
 
     // Historia clínica (esquina superior derecha)
-    pdf.text(seccionA.cod_historia || '', 670, 7);
+    pdf.setFont("times", "bold");
+    pdf.text(seccionA.cod_historia || '', 670, 15);
+    // vuelve a la fuente base
+    pdf.setFont("helvetica", "normal"); 
 
     // Fila 1: Datos del establecimiento
-    pdf.text((seccionA.institucion || '').toUpperCase(), 110, 60);
-    pdf.text((seccionA.unicodigo || '').toUpperCase(), 225, 60);
-    pdf.text((seccionA.establecimiento || '').toUpperCase(), 320, 60);
-    pdf.text((seccionA.historia || '').toUpperCase(), 480, 60);
-    pdf.text((seccionA.archivo || '').toUpperCase(), 620, 60);
+    pdf.text((seccionA.institucion || '').toUpperCase(), 110, 53);
+    pdf.text((seccionA.unicodigo || '').toUpperCase(), 225, 53);
+    pdf.text((seccionA.establecimiento || '').toUpperCase(), 320, 53);
+    pdf.text((seccionA.historia || '').toUpperCase(), 480, 53);
+    pdf.text((seccionA.archivo || '').toUpperCase(), 620, 53);
 }
 
 // === FUNCIÓN PARA LLENAR SECCIÓN B EN PDF ===
 function llenarSeccionBPDF(pdf, seccionB) {
 
     // Fila 1
-    pdf.text((seccionB.fecha_admision || '').toUpperCase(), 194, 122);
-    pdf.text((seccionB.nombre_completo_admisionista || '').toUpperCase(), 420, 122);
-    seccionB.historia_clinica_establecimiento == "si" ? pdf.text('X', 630, 122) :
-    seccionB.historia_clinica_establecimiento == "no" ? pdf.text('X', 677, 122) : null;
+    pdf.text((seccionB.fecha_admision || '').toUpperCase(), 194, 113);
+    pdf.text((seccionB.nombre_completo_admisionista || '').toUpperCase(), 420, 113);
+    seccionB.historia_clinica_establecimiento == "si" ? pdf.text('X', 630, 113) :
+        seccionB.historia_clinica_establecimiento == "no" ? pdf.text('X', 677, 113) : null;
 
     // Fila 2
-    pdf.text((seccionB.primer_apellido || '').toUpperCase(), 110, 167);
-    pdf.text((seccionB.segundo_apellido || '').toUpperCase(), 270, 167);
-    pdf.text((seccionB.primer_nombre || '').toUpperCase(), 390, 167);
-    pdf.text((seccionB.segundo_nombre || '').toUpperCase(), 505, 167);
+    pdf.text((seccionB.primer_apellido || '').toUpperCase(), 110, 160);
+    pdf.text((seccionB.segundo_apellido || '').toUpperCase(), 270, 160);
+    pdf.text((seccionB.primer_nombre || '').toUpperCase(), 390, 160);
+    pdf.text((seccionB.segundo_nombre || '').toUpperCase(), 505, 160);
 
     // Tipo de documento
     const tipoDocumentoTexto = {
@@ -607,10 +610,10 @@ function llenarSeccionBPDF(pdf, seccionB) {
         '4': 'SIN DOCUMENTO'
     };
     const tipoDocumentoCoords = {
-        'CC/CI': { x: 592, y: 167 },
-        'PASAPORTE': { x: 620, y: 167 },
-        'CARNET': { x: 650, y: 167 },
-        'SIN DOCUMENTO': { x: 678, y: 167 }
+        'CC/CI': { x: 592, y: 160 },
+        'PASAPORTE': { x: 620, y: 160 },
+        'CARNET': { x: 650, y: 160 },
+        'SIN DOCUMENTO': { x: 678, y: 160 }
     };
 
     const tipoDocCodigo = (seccionB.tipo_documento || '').trim();
@@ -630,12 +633,12 @@ function llenarSeccionBPDF(pdf, seccionB) {
         '6': 'A ESPECIFICAR'
     };
     const estadoCivilCoords = {
-        'SOLTERO(A)': { x: 75, y: 209 },
-        'CASADO(A)': { x: 93, y: 209 },
-        'VIUDO(A)': { x: 133, y: 209 },
-        'DIVORCIADO(A)': { x: 113, y: 209 },
-        'UNIÓN LIBRE': { x: 152, y: 209 },
-        'A ESPECIFICAR': { x: 189, y: 209 }
+        'SOLTERO(A)': { x: 75, y: 201 },
+        'CASADO(A)': { x: 93, y: 201 },
+        'VIUDO(A)': { x: 133, y: 201 },
+        'DIVORCIADO(A)': { x: 113, y: 201 },
+        'UNIÓN LIBRE': { x: 152, y: 201 },
+        'A ESPECIFICAR': { x: 189, y: 201 }
     };
 
     const estadoCivilCodigo = (seccionB.estado_civil || '').trim();
@@ -644,8 +647,6 @@ function llenarSeccionBPDF(pdf, seccionB) {
         const coord = estadoCivilCoords[estadoCivilTextoValor];
         pdf.text('X', coord.x, coord.y);
     }
-
-
 
     const generoTexto = {
         '1': 'MASCULINO',
@@ -656,15 +657,15 @@ function llenarSeccionBPDF(pdf, seccionB) {
 
     const generoCodigo = (seccionB.sexo || '').toString().trim();
     const genero = generoTexto[generoCodigo] || '';
-    pdf.text(genero, 205, 209);
+    pdf.text(genero, 205, 201);
 
 
-    pdf.text(seccionB.telefono_fijo || '', 288, 209);
-    pdf.text(seccionB.telefono_celular || '', 420, 209);
-    pdf.text((seccionB.fecha_nacimiento || '').toUpperCase(), 580, 209);
+    pdf.text(seccionB.telefono_fijo || '', 288, 201);
+    pdf.text(seccionB.telefono_celular || '', 420, 201);
+    pdf.text((seccionB.fecha_nacimiento || '').toUpperCase(), 580, 201);
 
     // Fila 4
-    pdf.text((seccionB.lugar_nacimiento || '').toUpperCase(), 90, 253);
+    pdf.text((seccionB.lugar_nacimiento || '').toUpperCase(), 90, 245);
 
     const nacionalidadTexto = {
         '1': 'ECUATORIANA',
@@ -676,15 +677,15 @@ function llenarSeccionBPDF(pdf, seccionB) {
     };
     const nacionalidadCodigo = (seccionB.nacionalidad || '').toString().trim();
     const nacionalidad = nacionalidadTexto[nacionalidadCodigo] || seccionB.nacionalidad || '';
-    pdf.text(nacionalidad, 288, 253);
+    pdf.text(nacionalidad, 288, 245);
 
-    pdf.text(seccionB.edad || '', 405, 253);
+    pdf.text(seccionB.edad || '', 405, 245);
 
     const edadUnidadCoords = {
-        'H': { x: 442, y: 253 },
-        'D': { x: 461, y: 253 },
-        'M': { x: 480, y: 253 },
-        'A': { x: 500, y: 253 }
+        'H': { x: 442, y: 245 },
+        'D': { x: 461, y: 245 },
+        'M': { x: 480, y: 245 },
+        'A': { x: 500, y: 245 }
     };
 
     const unidadEdad = (seccionB.condicion_edad || '').trim().toUpperCase();
@@ -698,17 +699,17 @@ function llenarSeccionBPDF(pdf, seccionB) {
     // Grupo prioritario - manejar múltiples formatos de valor
     const grupoPrioritario = seccionB.grupo_prioritario;
     if (grupoPrioritario === "si" || grupoPrioritario === "1" || grupoPrioritario === 1 || grupoPrioritario === true) {
-        pdf.text('X', 645, 225);
+        pdf.text('X', 645, 219);
     } else if (grupoPrioritario === "no" || grupoPrioritario === "0" || grupoPrioritario === 0 || grupoPrioritario === false) {
-        pdf.text('X', 685, 225);
+        pdf.text('X', 685, 219);
     }
 
     // pdf.text((seccionB.grupo_prioritario_especifique || '').toUpperCase(), 586, 242);
-    
+
     const textoLargo = (seccionB.grupo_prioritario_especifique || '').toUpperCase();
     const lineas = pdf.splitTextToSize(textoLargo, 100);
 
-    let y = 242; // punto inicial en vertical
+    let y = 232; // punto inicial en vertical
     const salto = 14; // distancia entre líneas
 
     lineas.forEach((linea, index) => {
@@ -729,7 +730,7 @@ function llenarSeccionBPDF(pdf, seccionB) {
 
     }; const etniaCodigo = (seccionB.autoidentificacion_etnica || '').toString().trim();
     const etnia = etniaTexto[etniaCodigo] || seccionB.autoidentificacion_etnica || '';
-    pdf.text(etnia, 110, 282);
+    pdf.text(etnia, 110, 274);
 
     // Mapeo de nacionalidad indígena
     const nacionalidadIndigenaTexto = {
@@ -738,7 +739,7 @@ function llenarSeccionBPDF(pdf, seccionB) {
         '11': 'ZÁPARA', '12': 'ANDOA', '13': 'SHIWIAR', '14': 'ACHUAR', '15': 'OTRAS'
     };
     const nacionalidadIndigena = nacionalidadIndigenaTexto[seccionB.nacionalidad_indigena] || seccionB.nacionalidad_indigena || '';
-    pdf.text(nacionalidadIndigena, 270, 282);
+    pdf.text(nacionalidadIndigena, 270, 274);
 
     // Mapeo de pueblo indígena
     const puebloIndigenaTexto = {
@@ -749,9 +750,7 @@ function llenarSeccionBPDF(pdf, seccionB) {
         '17': 'COFÁN', '18': 'SIONA - SECOYA', '19': 'OTROS'
     };
     const puebloIndigena = puebloIndigenaTexto[seccionB.pueblo_indigena] || seccionB.pueblo_indigena || '';
-    pdf.text(puebloIndigena, 450, 282);
-    
-    
+    pdf.text(puebloIndigena, 450, 274);
 
     const nivelEducacionTexto = {
         '1': 'EDUCACIÓN INICIAL',
@@ -761,8 +760,7 @@ function llenarSeccionBPDF(pdf, seccionB) {
     };
     const nivelEducCodigo = (seccionB.nivel_educacion || '').toString().trim();
     const nivelEducacion = nivelEducacionTexto[nivelEducCodigo] || seccionB.nivel_educacion || '';
-    pdf.text(nivelEducacion, 580, 282);
-
+    pdf.text(nivelEducacion, 580, 274);
 
     // Fila 6
     const estadoEducacionTexto = {
@@ -772,7 +770,7 @@ function llenarSeccionBPDF(pdf, seccionB) {
     };
     const estadoEducCodigo = (seccionB.estado_educacion || '').toString().trim();
     const estadoEducacion = estadoEducacionTexto[estadoEducCodigo] || seccionB.estado_educacion || '';
-    pdf.text(estadoEducacion, 110, 322);
+    pdf.text(estadoEducacion, 110, 314);
 
     const tipoEmpresaTexto = {
         '1': 'PÚBLICA',
@@ -782,9 +780,9 @@ function llenarSeccionBPDF(pdf, seccionB) {
     };
     const tipoEmpCodigo = (seccionB.tipo_empresa || '').toString().trim();
     const tipoEmpresa = tipoEmpresaTexto[tipoEmpCodigo] || seccionB.tipo_empresa || '';
-    pdf.text(tipoEmpresa, 260, 322);
+    pdf.text(tipoEmpresa, 260, 314);
 
-    pdf.text(seccionB.ocupacion || '', 415, 322);
+    pdf.text(seccionB.ocupacion || '', 415, 314);
 
     //I-590, 
     const seguroTexto = {
@@ -795,11 +793,11 @@ function llenarSeccionBPDF(pdf, seccionB) {
         '5': 'A ESPECIFICAR'
     };
     const seguroCoords = {
-        'IESS': { x: 536, y: 322 },
-        'ISSPOL': { x: 590, y: 322 },
-        'ISSFA': { x: 620, y: 322 },
-        'PRIVADO': { x: 652, y: 322 },
-        'A ESPECIFICAR': { x: 678, y: 322 }
+        'IESS': { x: 536, y: 314 },
+        'ISSPOL': { x: 590, y: 314 },
+        'ISSFA': { x: 620, y: 314 },
+        'PRIVADO': { x: 652, y: 314 },
+        'A ESPECIFICAR': { x: 678, y: 314 }
     };
 
     const seguroCodigo = (seccionB.seguro_salud || '').trim();
@@ -810,21 +808,21 @@ function llenarSeccionBPDF(pdf, seccionB) {
     }
 
     // Fila 7
-    pdf.text((seccionB.provincia || '').toUpperCase(), 180, 352);//(entre mas alto el numero va a bajar y en menos alto el numero sube)
-    pdf.text((seccionB.canton || '').toUpperCase(), 310, 352);
-    pdf.text((seccionB.parroquia || '').toUpperCase(), 420, 352);
-    pdf.text((seccionB.barrio || '').toUpperCase(), 545, 352);
+    pdf.text((seccionB.provincia || '').toUpperCase(), 180, 343);//(entre mas alto el numero va a bajar y en menos alto el numero sube)
+    pdf.text((seccionB.canton || '').toUpperCase(), 310, 343);
+    pdf.text((seccionB.parroquia || '').toUpperCase(), 420, 343);
+    pdf.text((seccionB.barrio || '').toUpperCase(), 545, 343);
 
     // Fila 8
-    pdf.text((seccionB.calle_principal || '').toUpperCase(), 140, 382);
-    pdf.text((seccionB.calle_secundaria || '').toUpperCase(), 365, 382);
-    pdf.text((seccionB.referencia || '').toUpperCase(), 545, 382);
+    pdf.text((seccionB.calle_principal || '').toUpperCase(), 140, 373);
+    pdf.text((seccionB.calle_secundaria || '').toUpperCase(), 365, 373);
+    pdf.text((seccionB.referencia || '').toUpperCase(), 545, 373);
 
     // Fila 9
-    pdf.text((seccionB.contacto_emergencia || '').toUpperCase(), 130, 412);
-    pdf.text((seccionB.parentesco || '').toUpperCase(), 300, 412);
-    pdf.text((seccionB.direccion_contacto || '').toUpperCase(), 410, 412);
-    pdf.text((seccionB.telefono_contacto || '').toUpperCase(), 620, 412);
+    pdf.text((seccionB.contacto_emergencia || '').toUpperCase(), 130, 403);
+    pdf.text((seccionB.parentesco || '').toUpperCase(), 300, 403);
+    pdf.text((seccionB.direccion_contacto || '').toUpperCase(), 410, 403);
+    pdf.text((seccionB.telefono_contacto || '').toUpperCase(), 620, 403);
 
     // Fila 10
     const formaLlegadaTexto = {
@@ -833,9 +831,9 @@ function llenarSeccionBPDF(pdf, seccionB) {
         '3': 'OTRO TRANSPORTE'
     };
     const formaLlegadaCoords = {
-        'AMBULATORIO': { x: 130, y: 445 },
-        'AMBULANCIA': { x: 210, y: 445 },
-        'OTRO TRANSPORTE': { x: 278, y: 445 }
+        'AMBULATORIO': { x: 130, y: 438 },
+        'AMBULANCIA': { x: 210, y: 438 },
+        'OTRO TRANSPORTE': { x: 278, y: 438 }
     };
 
     const llegadaCodigo = ((seccionB.forma_llegada || '').toUpperCase()).trim();
@@ -845,22 +843,22 @@ function llenarSeccionBPDF(pdf, seccionB) {
         pdf.text('X', coord.x, coord.y);
     }
 
-    pdf.text((seccionB.fuente_informacion || '').toUpperCase(), 335, 445);
-    pdf.text((seccionB.institucion_entrega || '').toUpperCase(), 480, 445);
-    pdf.text((seccionB.telefono_entrega || '').toUpperCase(), 620, 445);
+    pdf.text((seccionB.fuente_informacion || '').toUpperCase(), 335, 438);
+    pdf.text((seccionB.institucion_entrega || '').toUpperCase(), 480, 438);
+    pdf.text((seccionB.telefono_entrega || '').toUpperCase(), 620, 438);
 }
 
 
 // === FUNCIÓN PARA LLENAR SECCIÓN C EN PDF ===
 function llenarSeccionCPDF(pdf, seccionC) {
-    pdf.text((seccionC.fecha || '').toUpperCase(), 150, 490);
-    pdf.text(formatearHora008(seccionC.hora || '').toUpperCase(), 300, 490);
+    pdf.text((seccionC.fecha || '').toUpperCase(), 150, 480);
+    pdf.text(formatearHora008(seccionC.hora || '').toUpperCase(), 300, 480);
 
     // Condición de llegada (según códigos del catálogo)
     const condicionCoords = {
-        '1': { x: 490, y: 490 },
-        '2': { x: 578, y: 490 },
-        '3': { x: 680, y: 490 }
+        '1': { x: 490, y: 480 },
+        '2': { x: 578, y: 480 },
+        '3': { x: 680, y: 480 }
     };
 
     const condicion = seccionC.condicion;
@@ -872,7 +870,7 @@ function llenarSeccionCPDF(pdf, seccionC) {
     const textoLargo = (seccionC.motivo || '').toUpperCase();
     const lineas = pdf.splitTextToSize(textoLargo, 530);
 
-    let y = 505; // punto inicial en vertical
+    let y = 495; // punto inicial en vertical
     const salto = 9; // distancia entre líneas
 
     lineas.forEach((linea, index) => {
@@ -884,40 +882,40 @@ function llenarSeccionCPDF(pdf, seccionC) {
 
 // === FUNCIÓN PARA LLENAR SECCIÓN D EN PDF ===
 function llenarSeccionDPDF(pdf, seccionD) {
-    pdf.text((seccionD.fecha_evento || '').toUpperCase(), 85, 570);
-    pdf.text(formatearHora008(seccionD.hora_evento || '').toUpperCase(), 150, 570);
-    pdf.text((seccionD.lugar_evento || '').toUpperCase(), 250, 570);
-    pdf.text((seccionD.direccion_evento || '').toUpperCase(), 440, 570);
+    pdf.text((seccionD.fecha_evento || '').toUpperCase(), 85, 560);
+    pdf.text(formatearHora008(seccionD.hora_evento || '').toUpperCase(), 150, 560);
+    pdf.text((seccionD.lugar_evento || '').toUpperCase(), 250, 560);
+    pdf.text((seccionD.direccion_evento || '').toUpperCase(), 440, 560);
 
     // Tipos de evento (checkboxes múltiples)
     const tiposEventoCoords = {
         //Fila 1
-        '1': { x: 131, y: 588 }, //ACCIDENTE DE TRÁNSITO
-        '2': { x: 210, y: 588 }, //CAÍDA  
-        '3': { x: 288, y: 588 }, //QUEMADURA
-        '4': { x: 365, y: 588 }, //MORDEDURA
-        '5': { x: 443, y: 588 }, //AHOGAMIENTO
-        '6': { x: 519, y: 588 }, //CUERPO EXTRAÑO
-        '7': { x: 608, y: 588 }, //APLASTAMIENTO
+        '1': { x: 131, y: 580 }, //ACCIDENTE DE TRÁNSITO
+        '2': { x: 210, y: 580 }, //CAÍDA  
+        '3': { x: 288, y: 580 }, //QUEMADURA
+        '4': { x: 365, y: 580 }, //MORDEDURA
+        '5': { x: 443, y: 580 }, //AHOGAMIENTO
+        '6': { x: 519, y: 580 }, //CUERPO EXTRAÑO
+        '7': { x: 608, y: 580 }, //APLASTAMIENTO
         //Fila 2
-        '8': { x: 131, y: 611 }, //VIOLENCIA POR ARMA DE FUEGO
-        '9': { x: 210, y: 611 }, //VIOLENCIA POR ARMA C. PUNZANTE
-        '10': { x: 288, y: 611 }, //VIOLENCIA POR RIÑA
-        '11': { x: 365, y: 611 }, //VIOLENCIA FAMILIAR
-        '12': { x: 443, y: 611 }, //VIOLENCIA FÍSICA
-        '13': { x: 519, y: 611 }, //VIOLENCIA PSICOLÓGICA
-        '14': { x: 608, y: 611 }, //VIOLENCIA SEXUAL
+        '8': { x: 131, y: 600 }, //VIOLENCIA POR ARMA DE FUEGO
+        '9': { x: 210, y: 600 }, //VIOLENCIA POR ARMA C. PUNZANTE
+        '10': { x: 288, y: 600 }, //VIOLENCIA POR RIÑA
+        '11': { x: 365, y: 600 }, //VIOLENCIA FAMILIAR
+        '12': { x: 443, y: 600 }, //VIOLENCIA FÍSICA
+        '13': { x: 519, y: 600 }, //VIOLENCIA PSICOLÓGICA
+        '14': { x: 608, y: 600 }, //VIOLENCIA SEXUAL
         //Fila 3
-        '15': { x: 131, y: 630 }, //INTOXICACIÓN ALCOHÓLICA
-        '16': { x: 210, y: 630 }, //INTOXICACIÓN ALIMENTARIA
-        '17': { x: 288, y: 630 }, //INTOXICACIÓN POR DROGAS
-        '18': { x: 365, y: 630 }, //INHALACIÓN DE GASES
-        '19': { x: 443, y: 630 }, //OTRA INTOXICACIÓN
-        '20': { x: 519, y: 630 }, //PICADURA
-        '21': { x: 608, y: 630 }, //ENVENENAMIENTO
+        '15': { x: 131, y: 620 }, //INTOXICACIÓN ALCOHÓLICA
+        '16': { x: 210, y: 620 }, //INTOXICACIÓN ALIMENTARIA
+        '17': { x: 288, y: 620 }, //INTOXICACIÓN POR DROGAS
+        '18': { x: 365, y: 620 }, //INHALACIÓN DE GASES
+        '19': { x: 443, y: 620 }, //OTRA INTOXICACIÓN
+        '20': { x: 519, y: 620 }, //PICADURA
+        '21': { x: 608, y: 620 }, //ENVENENAMIENTO
         //Otras opciones
-        '23': { x: 683, y: 588 }, //OTRO ACCIDENTE
-        '22': { x: 684, y: 630 }, //ANAFILAXIA
+        '23': { x: 683, y: 580 }, //OTRO ACCIDENTE
+        '22': { x: 684, y: 620 }, //ANAFILAXIA
     };
 
     seccionD.tipos_evento.forEach(tipo => {
@@ -929,27 +927,27 @@ function llenarSeccionDPDF(pdf, seccionD) {
 
     // Custodia policial
     if (seccionD.custodia_policial === 'si') {
-        pdf.text('X', 645, 570);
+        pdf.text('X', 645, 560);
     } else if (seccionD.custodia_policial === 'no') {
-        pdf.text('X', 684, 570);
+        pdf.text('X', 684, 560);
     }
 
     // Notificación
     if (seccionD.notificacion === 'si') {
-        pdf.text('X', 645, 615);
+        pdf.text('X', 645, 608);
     } else if (seccionD.notificacion === 'no') {
-        pdf.text('X', 684, 615);
+        pdf.text('X', 684, 608);
     }
 
     // Sugestivo de alcohol
     if (seccionD.sugestivo_alcohol) {
-        pdf.text('X', 684, 720);
+        pdf.text('X', 684, 710);
     }
 
     const textoLargo = (seccionD.observaciones || '').toUpperCase();
     const lineas = pdf.splitTextToSize(textoLargo, 530);
 
-    let y = 648; // punto inicial en vertical
+    let y = 639; // punto inicial en vertical
     const salto = 14; // distancia entre líneas
 
     lineas.forEach((linea, index) => {
@@ -968,17 +966,17 @@ function llenarSeccionEPDF(pdf, seccionE) {
     } else {
         // Antecedentes (checkboxes múltiples)
         const antecedentesCoords = {
-            '1': { x: 159, y: 763 }, // ALERGICOS
-            '3': { x: 279, y: 763 }, // GINECOLOGICOS
-            '5': { x: 413, y: 763 }, // PEDIATRICOS
-            '7': { x: 558, y: 763 }, // FAMACOLOGICOS
-            '9': { x: 683, y: 763 }, // FAMILIARES
+            '1': { x: 159, y: 753 }, // ALERGICOS
+            '3': { x: 279, y: 753 }, // GINECOLOGICOS
+            '5': { x: 413, y: 753 }, // PEDIATRICOS
+            '7': { x: 558, y: 753 }, // FAMACOLOGICOS
+            '9': { x: 683, y: 753 }, // FAMILIARES
 
-            '2': { x: 159, y: 781 }, // CLINICOS
-            '4': { x: 279, y: 781 }, // TRAUMATOLOGICOS
-            '6': { x: 413, y: 781 }, // QUIRURGICOS
-            '8': { x: 558, y: 781 }, // HABITOS
-            '10': { x: 683, y: 781 }, // OTROS
+            '2': { x: 159, y: 771 }, // CLINICOS
+            '4': { x: 279, y: 771 }, // TRAUMATOLOGICOS
+            '6': { x: 413, y: 771 }, // QUIRURGICOS
+            '8': { x: 558, y: 771 }, // HABITOS
+            '10': { x: 683, y: 771 }, // OTROS
         };
 
         seccionE.antecedentes.forEach(antecedente => {
@@ -991,7 +989,7 @@ function llenarSeccionEPDF(pdf, seccionE) {
         const textoLargo = (seccionE.descripcion || '').toUpperCase();
         const lineas = pdf.splitTextToSize(textoLargo, 600); // ajusta el ancho del texto
 
-        let y = 800; // punto inicial en vertical
+        let y = 790; // punto inicial en vertical
         const salto = 18; // distancia entre líneas (puedes ajustar: 15, 18, 20, etc.)
 
         lineas.forEach(linea => {
@@ -1007,7 +1005,7 @@ function llenarSeccionFPDF(pdf, seccionF) {
     const textoLargo = (seccionF.descripcion || '').toUpperCase();
     const lineas = pdf.splitTextToSize(textoLargo, 590); // ajusta el ancho del texto
 
-    let y = 900; // punto inicial en vertical
+    let y = 890; // punto inicial en vertical
     const salto = 18; // distancia entre líneas (puedes ajustar: 15, 18, 20, etc.)
 
     lineas.forEach(linea => {
@@ -1110,7 +1108,7 @@ function llenarSeccionIPDF(pdf, seccionI) {
 function llenarSeccionJPDF(pdf, seccionJ) {
     // Verificar si "No aplica" está marcado
     if (seccionJ.no_aplica) {
-        pdf.text('X', 722, 365);
+        pdf.text('X', 722, 363);
         return;
     }
 
@@ -1296,32 +1294,32 @@ function llenarSeccionNPDF(pdf, seccionN) {
         { campo: 'posologia', x: 545 },
         { campo: 'dias', x: 695 }
     ];
-    
+
     // Configuración de tratamientos
     const yInicial = 678;
     const espaciadoTratamientos = 14;
     const maxTratamientos = 7;
-    
+
     // Llenar tratamientos de forma dinámica
     for (let i = 1; i <= maxTratamientos; i++) {
         const tratamiento = seccionN[`tratamiento${i}`];
         if (!tratamiento) continue;
-        
+
         const y = yInicial + (i - 1) * espaciadoTratamientos;
-        
+
         columnas.forEach(col => {
             const valor = (tratamiento[col.campo] || '').toUpperCase();
             pdf.text(valor, col.x, y);
         });
     }
-    
+
     // Observaciones del plan de tratamiento
-    
+
     if (seccionN.observaciones) {
         const lineas = pdf.splitTextToSize((seccionN.observaciones || '').toUpperCase(), 660);
         let y = 778;
         const saltoLinea = 14;
-        
+
         lineas.forEach(linea => {
             pdf.text(linea, 35, y);
             y += saltoLinea;
@@ -1391,7 +1389,7 @@ function llenarSeccionOPDF(pdf, seccionO) {
     // Campos de texto
     pdf.text((seccionO.establecimiento_egreso || '').toUpperCase(), 530, 883);
 
-    const textoLargo = (seccionO.observaciones|| '').toUpperCase();
+    const textoLargo = (seccionO.observaciones || '').toUpperCase();
     const lineas = pdf.splitTextToSize(textoLargo, 540);
 
     let y = 898; // punto inicial en vertical

@@ -26,7 +26,6 @@ const PDF_CONFIG_005 = {
     MARGIN_TOP: 20,
 
     // CONFIGURACIÓN MANUAL DE FILAS - Ajustable por el usuario
-    // Nota: 1cm = 28.35 píxeles aproximadamente (72 DPI)
     MANUAL_ROW_CONFIG: {
         pagina1: {
             // Configuración por defecto para cada fila de página 1
