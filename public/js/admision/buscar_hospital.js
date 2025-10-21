@@ -241,7 +241,7 @@ document.getElementById('btn-buscar').addEventListener('click', async () => {
 
             } catch (fillError) {
                 console.error('❌ Error llenando formulario:', fillError);
-                mostrarAlerta('warning', 'Datos obtenidos pero error al llenar algunos campos del formulario.');
+                mostrarAlerta('warning', 'Datos del paciente obtenidos, Algunos campos del formulario deben ser actualizados.');
             }
 
         } else {
