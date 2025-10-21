@@ -60,7 +60,7 @@ function mostrarMensajeGlobal(tipo, mensaje) {
 }
 
 function getAlertClassGlobal(tipo) {
-    switch(tipo) {
+    switch (tipo) {
         case 'success': return 'bg-green-100 text-green-800 border border-green-300';
         case 'error': return 'bg-red-100 text-red-800 border border-red-300';
         case 'warning': return 'bg-yellow-100 text-yellow-800 border border-yellow-300';
@@ -70,7 +70,7 @@ function getAlertClassGlobal(tipo) {
 }
 
 function getAlertIconGlobal(tipo) {
-    switch(tipo) {
+    switch (tipo) {
         case 'success': return 'fa-check-circle';
         case 'error': return 'fa-exclamation-circle';
         case 'warning': return 'fa-exclamation-triangle';
@@ -112,14 +112,14 @@ function limpiarFormularioCompleto() {
             'res_barrio_sector', 'pac_edad_valor', 'contacto_emerg_nombre', 'contacto_emerg_parentesco',
             'contacto_emerg_direccion', 'contacto_emerg_telefono', 'fuente_informacion',
             'entrega_paciente_nombre_inst', 'entrega_paciente_telefono', 'cod-historia', 'adm_fecha',
-            'adm_admisionista_nombre', 'estab_archivo','pac_nacionalidad_indigena','pac_pueblo_indigena',
-            'res_calle_secundaria','res_referencia',
+            'adm_admisionista_nombre', 'estab_archivo', 'pac_nacionalidad_indigena', 'pac_pueblo_indigena',
+            'res_calle_secundaria', 'res_referencia',
 
             // Constantes vitales - Sección G
             'cv_presion_arterial', 'cv_pulso', 'cv_frec_resp', 'cv_pulsioximetria', 'cv_temperatura',
             'cv_peso', 'cv_talla', 'cv_perimetro_cefalico', 'cv_glicemia', 'cv_reaccion_pupilar_der',
             'cv_reaccion_pupilar_izq', 'cv_llenado_capilar', 'cv_glasgow_ocular', 'cv_glasgow_verbal',
-            'cv_glasgow_motora','cv_triaje_color',
+            'cv_glasgow_motora', 'cv_triaje_color',
 
             // Inicio atención - Sección C
             'inicio_atencion_motivo', 'inicio_atencion_fecha', 'inicio_atencion_hora', 'inicio_atencion_condicion',
@@ -1010,15 +1010,25 @@ function llenarSeccionB(d) {
         ['pac_sexo', 'genero', d.genero],
         ['pac_nacionalidad', 'nacionalidad', d.nacionalidad],
         ['pac_etnia', 'etnia', d.grupo_cultural],
-        ['pac_nacionalidad_indigena', 'nacionalidad_indigena', d.nacionalidad_indigena],
-        ['pac_pueblo_indigena', 'pueblo_indigena', d.pueblo_indigena],
         ['pac_nivel_educacion', 'nivel_educacion', d.nivel_educacion],
         ['pac_estado_educacion', 'estado_educacion', d.estado_nivel_educ],
         ['pac_tipo_empresa', 'empresa', d.empresa],
         ['pac_seguro', 'seguro', d.seguro],
         ['forma_llegada', 'forma_llegada', d.forma_llegada]
     ];
-    
+
+    const selectsDirectos = [
+        ['pac_nacionalidad_indigena', d.nac_ind_codigo || d.nacionalidad_indigena],
+        ['pac_pueblo_indigena', d.pue_ind_codigo || d.pueblo_indigena]
+    ];
+
+    selectsDirectos.forEach(([elementId, value]) => {
+        const select = document.getElementById(elementId);
+        if (select && value) {
+            select.value = value;
+        }
+    });
+
     // Radio button para grupo prioritario
     if (d.pac_grupo_prioritario == 1 || d.pac_grupo_prioritario === true || d.pac_grupo_prioritario === 'si') {
         const radioSi = document.getElementById('pac_grupo_prioritario_si');
@@ -1052,7 +1062,7 @@ function llenarSeccionB(d) {
             log('debug', '👤 Edad unidad: A (Años)');
         }
     }
-    
+
     selectMappings.forEach(([elementId, mapKey, value]) => {
         const select = document.getElementById(elementId);
         if (select && value) {
@@ -1097,7 +1107,7 @@ function llenarSeccionB(d) {
         }
     });
 
-    
+
 }
 
 
@@ -1236,7 +1246,7 @@ function llenarSeccionG(d) {
         const checkboxSinVitales = document.getElementById('cv_sin_vitales');
         if (checkboxSinVitales) {
             checkboxSinVitales.checked = true;
-            
+
             if (typeof toggleConstantesVitales === 'function') {
                 toggleConstantesVitales();
             }
@@ -1321,7 +1331,7 @@ function llenarSeccionJ(d) {
         const checkboxNoAplica = document.getElementById('emb_no_aplica');
         if (checkboxNoAplica) {
             checkboxNoAplica.checked = true;
-            
+
             if (typeof toggleEmbarazo === 'function') {
                 toggleEmbarazo();
             }
@@ -1539,7 +1549,7 @@ function llenarSeccionP(data) {
     // Manejar firma y sello
     manejarImagenProfesional('prof_firma', data.pro_firma_base64, data.pro_firma_existe, 'Firma del Profesional');
     manejarImagenProfesional('prof_sello', data.pro_sello_base64, data.pro_sello_existe, 'Sello del Profesional');
-    
+
     // 🔥 NUEVO: Guardar datos para PDF en una variable global
     window.datosImagenesProfesional = {
         pro_firma_base64: data.pro_firma_base64,
@@ -1568,7 +1578,7 @@ function manejarImagenProfesional(fieldName, imagenBase64, existe, titulo) {
         // Buscar el preview existente
         const previewId = fieldName === 'prof_firma' ? 'firma-preview' : 'sello-preview';
         const preview = document.getElementById(previewId);
-        
+
         if (preview) {
             preview.innerHTML = `<img src="${imagenBase64}" alt="${titulo}" style="max-width: 100%; max-height: 100px;">`;
             preview.classList.add('has-image');
@@ -1600,7 +1610,7 @@ function manejarImagenProfesional(fieldName, imagenBase64, existe, titulo) {
         // No hay imagen - limpiar el preview
         const previewId = fieldName === 'prof_firma' ? 'firma-preview' : 'sello-preview';
         const preview = document.getElementById(previewId);
-        
+
         if (preview) {
             preview.innerHTML = '<i class="fas fa-image text-gray-400"></i>';
             preview.classList.remove('has-image');
@@ -1773,7 +1783,7 @@ function deshabilitarBotonPDF008() {
 }
 
 // === INICIALIZACIÓN ===
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Solo ejecutar si estamos en una vista que tiene el formulario 008
     const contenedorForm008 = document.getElementById('contenedor-formulario-008');
 
