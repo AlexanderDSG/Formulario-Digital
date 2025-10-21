@@ -237,7 +237,7 @@ document.getElementById('btn-buscar').addEventListener('click', async () => {
                     edadInput.value = edad;
                 }
 
-                mostrarAlerta('success', 'Datos del hospital cargados correctamente.');
+                mostrarAlerta('exito', 'Datos del hospital cargados correctamente.');
 
             } catch (fillError) {
                 console.error('❌ Error llenando formulario:', fillError);
