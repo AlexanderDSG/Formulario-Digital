@@ -21,7 +21,7 @@ Sistema de gestión de formularios médicos digitales diseñado para optimizar e
 
 ### Alcance y Limitaciones
 
-* Alcance:**
+**Alcance:**
 - Gestión completa de pacientes en servicios de emergencia
 - Sistema de roles para 5 tipos de usuarios médicos
 - Formularios médicos divididos en 16 secciones (A-P)
@@ -179,10 +179,6 @@ Formulario-Digital/
 ├── src/
 │   └── input.css               # Archivo fuente TailwindCSS
 │
-├── tests/                      # Pruebas automatizadas
-│   ├── unit/
-│   ├── database/
-│   └── session/
 │
 ├── writable/                   # Archivos generados
 │   ├── logs/                   # Logs de la aplicación
